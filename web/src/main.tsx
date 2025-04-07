@@ -1,0 +1,23 @@
+import "./index.css";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { Layout } from "./screens/Layout";
+import { Home } from "./screens/Home";
+import { About } from "./screens/About";
+import { Term } from "./screens/Term";
+import { Contact } from "./screens/Contact";
+import { Notfound } from "./screens/Notfound";
+
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/term" element={<Term />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/*" element={<Notfound />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
+);

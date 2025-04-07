@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" href="./images/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="./images/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <meta property="og:url" content="https://ai-chousei.com/" />
+    <meta
+      property="og:title"
+      content="AI文字数調整くん｜文字数調整・カウントツール"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="AI文字数調整くんは、文章の文字数をAIで自然に調整できるツールです。レポート、ES、SNS投稿など文字数制限がある場面で便利です。現在200〜2000文字の範囲で調整可能です。"
+    />
+    <meta property="og:image" content="https://ai-chousei.com/images/ogp.png" />
+    <meta property="og:site_name" content="AI文字数調整くん" />
+    <meta property="og:locale" content="ja_JP" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500&family=Noto+Sans+JP:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      if (
+        window.location.hostname === "text-count.firebaseapp.com" ||
+        window.location.hostname === "text-count.web.app"
+      )
+        window.location.replace(
+          `https://ai-chousei.com${window.location.pathname}`
+        );
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
