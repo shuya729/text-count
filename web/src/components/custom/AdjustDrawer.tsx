@@ -22,7 +22,7 @@ interface AdjustDrawerProps {
 export const AdjustDrawer = (props: AdjustDrawerProps): JSX.Element => {
   const { input, open, onOpenChange, onSubmit } = props;
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={onOpenChange} repositionInputs={false}>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle className="text-base">文字数を調整</DrawerTitle>
