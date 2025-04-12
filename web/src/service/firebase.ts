@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import { getFunctions } from "firebase/functions";
 import {
   initializeAppCheck,
@@ -29,4 +30,5 @@ initializeAppCheck(app, {
   ),
   isTokenAutoRefreshEnabled: true,
 });
+getAnalytics(app);
 export const functions = getFunctions(app, "asia-northeast1");
