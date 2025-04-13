@@ -19,7 +19,7 @@ export const Layout = (): JSX.Element => {
     <>
       <div className="w-full min-w-[370px]">
         <header className="flex w-full h-fit justify-between items-center p-2 sm:p-5">
-          <div className="flex items-end gap-6">
+          <div className="flex items-end">
             <Link to="/">
               <Button
                 variant="ghost"
@@ -30,31 +30,28 @@ export const Layout = (): JSX.Element => {
             </Link>
 
             <div className="h-fit hidden sm:block">
-              <div className="flex justify-between h-fit gap-2">
+              <div className="flex justify-between h-fit">
                 <Link to="/about">
-                  <Button
-                    variant="ghost"
-                    className="text-foreground font-noto-sans-jp"
-                  >
+                  <Button variant="ghost" className="text-foreground">
                     ツールについて
                   </Button>
                 </Link>
 
                 <Link to="/term">
-                  <Button
-                    variant="ghost"
-                    className="text-foreground font-noto-sans-jp"
-                  >
+                  <Button variant="ghost" className="text-foreground">
                     利用規約
                   </Button>
                 </Link>
 
+                <Link to="/privacy">
+                  <Button variant="ghost" className="text-foreground">
+                    プライバシー
+                  </Button>
+                </Link>
+
                 <Link to="/contact">
-                  <Button
-                    variant="ghost"
-                    className="text-foreground font-noto-sans-jp"
-                  >
-                    お問い合わせ
+                  <Button variant="ghost" className="text-foreground">
+                    問い合わせ
                   </Button>
                 </Link>
               </div>
@@ -77,7 +74,7 @@ export const Layout = (): JSX.Element => {
                     <Button
                       variant="ghost"
                       onClick={() => setOpenMenu(false)}
-                      className="font-noto-sans-jp text-foreground font-bold"
+                      className="text-foreground font-bold"
                     >
                       ホーム
                     </Button>
@@ -91,7 +88,7 @@ export const Layout = (): JSX.Element => {
                   <Button
                     variant="ghost"
                     onClick={() => setOpenMenu(false)}
-                    className="font-noto-sans-jp text-foreground"
+                    className="text-foreground"
                   >
                     ツールについて
                   </Button>
@@ -101,9 +98,19 @@ export const Layout = (): JSX.Element => {
                   <Button
                     variant="ghost"
                     onClick={() => setOpenMenu(false)}
-                    className="font-noto-sans-jp text-foreground"
+                    className="text-foreground"
                   >
                     利用規約
+                  </Button>
+                </Link>
+
+                <Link to="/privacy">
+                  <Button
+                    variant="ghost"
+                    onClick={() => setOpenMenu(false)}
+                    className="text-foreground"
+                  >
+                    プライバシー
                   </Button>
                 </Link>
 
@@ -111,9 +118,9 @@ export const Layout = (): JSX.Element => {
                   <Button
                     variant="ghost"
                     onClick={() => setOpenMenu(false)}
-                    className="font-noto-sans-jp text-foreground"
+                    className="text-foreground"
                   >
-                    お問い合わせ
+                    問い合わせ
                   </Button>
                 </Link>
               </div>

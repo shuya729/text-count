@@ -7,6 +7,7 @@ import { About } from "./screens/About";
 import { Term } from "./screens/Term";
 import { Contact } from "./screens/Contact";
 import { Notfound } from "./screens/Notfound";
+import { Privacy } from "./screens/Privacy";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -15,6 +16,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/term" element={<Term />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/*" element={<Notfound />} />
       </Route>
