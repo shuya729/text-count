@@ -1,5 +1,6 @@
 import { httpsCallable } from "firebase/functions";
-import { functions } from "@/service/firebase";
+import { analytics, functions } from "@/service/firebase";
+import { logEvent } from "firebase/analytics";
 
 interface Output {
   output: string;
@@ -11,6 +12,9 @@ export async function adjustText(
   input: string,
   count: number
 ): Promise<Output> {
+  // anlytics のイベントを記録
+  logEvent(analytics, "adjust_text", { input: input, count: count });
+
   const adjustText = httpsCallable(functions, "adjustText");
   try {
     const res = await adjustText({ input: input, count: count });

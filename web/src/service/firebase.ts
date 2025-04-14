@@ -30,5 +30,5 @@ initializeAppCheck(app, {
   ),
   isTokenAutoRefreshEnabled: true,
 });
-getAnalytics(app);
+export const analytics = getAnalytics(app);
 export const functions = getFunctions(app, "asia-northeast1");
