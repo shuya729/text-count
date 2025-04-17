@@ -13,8 +13,7 @@ export const adjustFormSchema = z
     (args) => {
       const { input, count } = args;
       const length = input.trim().length;
-      const rate = ((count - length) / length) * 100;
-      return rate < -10 || rate > 10;
+      return length < count * 0.9 || length > count * 1.1;
     },
     {
       message: "文字数は十分に調整されています。",

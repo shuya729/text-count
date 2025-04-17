@@ -139,7 +139,7 @@ export const Home = (): JSX.Element => {
 
   return (
     <>
-      <title>AI文字数調整くん｜文字数調整・カウントツール</title>
+      <title>AI文字数調整くん｜文字数カウント・調整ツール</title>
       <meta
         name="description"
         content="AI文字数調整くんは、文章の文字数をAIで自然に調整できるツールです。レポート、ES、SNS投稿など文字数制限がある場面で便利です。現在200〜2000文字の範囲で調整可能です。"
