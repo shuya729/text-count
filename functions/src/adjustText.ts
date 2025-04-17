@@ -213,9 +213,6 @@ const adjustTextFlow = ai.defineFlow(
 );
 
 export const adjustText = onCallGenkit(
-  {
-    secrets: [geminiApiKey],
-    enforceAppCheck: true,
-  },
+  { secrets: [geminiApiKey] },
   adjustTextFlow
 );

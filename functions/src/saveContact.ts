@@ -44,10 +44,7 @@ const isContactInput = (data: unknown): boolean => {
 };
 
 export const saveContact = onCall(
-  {
-    secrets: [lineChannelAccessToken],
-    enforceAppCheck: true,
-  },
+  { secrets: [lineChannelAccessToken] },
   async (req) => {
     const functionName = "saveContact";
     const input = req.data;
