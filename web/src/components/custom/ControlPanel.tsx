@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Loader2, RefreshCcw, Redo, Undo, Edit2 } from "lucide-react";
+import { Copy, Loader2, RotateCcw, Redo, Undo, Edit2 } from "lucide-react";
 import { JSX } from "react";
 
 interface ControlPanelProps {
@@ -65,7 +65,7 @@ export const ControlPanel = (props: ControlPanelProps): JSX.Element => {
             <div className="hidden sm:inline-block">進む</div>
           </Button>
           <Button variant="secondary" onClick={onClear} disabled={disableClear}>
-            <RefreshCcw />
+            <RotateCcw />
             <div className="hidden sm:inline-block">クリア</div>
           </Button>
           <Button variant="secondary" onClick={onCopy} disabled={disableCopy}>
