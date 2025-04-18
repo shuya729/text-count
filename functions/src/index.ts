@@ -5,7 +5,7 @@ setGlobalOptions({
   region: "asia-northeast1",
   enforceAppCheck: true,
   memory: "256MiB",
-  timeoutSeconds: 40,
+  timeoutSeconds: 60,
 });
 initializeApp();
 
