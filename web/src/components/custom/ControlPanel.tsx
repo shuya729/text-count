@@ -34,7 +34,7 @@ export const ControlPanel = (props: ControlPanelProps): JSX.Element => {
     disableAdjust,
   } = props;
   return (
-    <div className="flex w-full h-fit justify-center items-center">
+    <div className="flex w-full h-fit justify-center items-center px-6">
       <div className="flex rounded-lg bg-sidebar border-sidebar-border border-1 p-2 gap-2 sm:gap-4">
         <div className="flex flex-col items-start gap-1">
           <Label
@@ -47,7 +47,7 @@ export const ControlPanel = (props: ControlPanelProps): JSX.Element => {
             id="count"
             value={count}
             disabled
-            className="bg-background w-24 shadow-none text-center disabled:pointer-events-auto disabled:cursor-text disabled:opacity-100"
+            className="bg-background w-full max-w-24 px-0 shadow-none text-center disabled:pointer-events-auto disabled:cursor-text disabled:opacity-100"
           />
         </div>
 
@@ -55,7 +55,7 @@ export const ControlPanel = (props: ControlPanelProps): JSX.Element => {
           <Separator orientation="vertical" className="bg-sidebar-border" />
         </div>
 
-        <div className="flex items-end gap-2 sm:p-1">
+        <div className="flex items-end gap-1 sm:gap-2 sm:p-1">
           <Button variant="secondary" onClick={onUndo} disabled={disableUndo}>
             <Undo />
             <div className="hidden sm:inline-block">戻る</div>

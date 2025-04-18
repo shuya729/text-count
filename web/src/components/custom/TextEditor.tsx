@@ -14,7 +14,7 @@ export const TextEditor = (props: TextEditorProps): JSX.Element => {
 
   if (adjustStatus === 1) {
     return (
-      <div className="flex justify-center p-2 sm:p-4">
+      <div className="flex justify-center px-6 py-2 sm:py-4">
         <div className="max-w-3xl border-input w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs outline-none cursor-not-allowed opacity-50 space-y-1 min-h-80 h-[calc(100vh-160px)] sm:h-[calc(100vh-200px)]">
           <Skeleton className="h-4 w-[60%]" />
           <Skeleton className="h-4 w-[90%]" />
@@ -29,13 +29,13 @@ export const TextEditor = (props: TextEditorProps): JSX.Element => {
     );
   } else {
     return (
-      <div className="flex justify-center p-2 sm:p-4">
+      <div className="flex justify-center px-6 py-2 sm:py-4">
         <Textarea
           placeholder="文章を入力して下さい。"
           value={text}
           disabled={disabled}
           onChange={onChange}
-          className="max-w-3xl text-sm min-h-80 h-[calc(100svh-142px)] sm:h-[calc(100svh-190px)] disabled:opacity-100"
+          className="max-w-3xl text-sm min-h-80 h-[calc(100svh-150px)] sm:h-[calc(100svh-200px)] disabled:opacity-100"
         />
       </div>
     );
