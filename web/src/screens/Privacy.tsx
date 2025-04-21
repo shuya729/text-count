@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { privacyTexts } from "@/constants/privacyTexts";
-import { JSX } from "react";
+import type { JSX } from "react";
 import { Link } from "react-router";
 
 interface PrivacyText {
@@ -23,8 +23,8 @@ export const Privacy = (): JSX.Element => {
           プライバシーポリシー
         </h2>
         <div className="py-6 sm:py-8">
-          {privacyTexts.map((privacyText, index) => (
-            <PrivacyText key={index} {...privacyText} />
+          {privacyTexts.map((privacyText) => (
+            <PrivacyText key={privacyText.text} {...privacyText} />
           ))}
           <div className="py-8 flex justify-center">
             <Link to="/contact">
@@ -50,22 +50,22 @@ const PrivacyText = (privacyText: PrivacyText): JSX.Element => {
       return (
         <h3 className="text-base font-semibold pt-10 pb-4 pl-4">{text}</h3>
       );
-    } else if (indent === 2) {
+    }
+    if (indent === 2) {
       return (
         <h3 className="text-base font-semibold pt-10 pb-4 pl-8">{text}</h3>
       );
-    } else {
-      return <h3 className="text-base font-semibold pt-10 pb-4">{text}</h3>;
     }
-  } else {
-    if (indent === 1) {
-      return <p className="py-1 text-sm pl-4">{text}</p>;
-    } else if (indent === 2) {
-      return <p className="py-1 text-sm pl-8">{text}</p>;
-    } else if (indent === 3) {
-      return <p className="py-1 text-sm pl-12">{text}</p>;
-    } else {
-      return <p className="py-1 text-sm">{text}</p>;
-    }
+    return <h3 className="text-base font-semibold pt-10 pb-4">{text}</h3>;
   }
+  if (indent === 1) {
+    return <p className="py-1 text-sm pl-4">{text}</p>;
+  }
+  if (indent === 2) {
+    return <p className="py-1 text-sm pl-8">{text}</p>;
+  }
+  if (indent === 3) {
+    return <p className="py-1 text-sm pl-12">{text}</p>;
+  }
+  return <p className="py-1 text-sm">{text}</p>;
 };

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Toaster } from "@/components/ui/sonner";
 import { Menu } from "lucide-react";
-import { JSX, useState } from "react";
+import { type JSX, useState } from "react";
 import { Link, Outlet } from "react-router";
 
 export const Layout = (): JSX.Element => {
@@ -80,7 +80,7 @@ export const Layout = (): JSX.Element => {
                     </Button>
                   </Link>
                 </SheetTitle>
-                <SheetDescription></SheetDescription>
+                <SheetDescription />
               </SheetHeader>
 
               <div className="flex flex-col items-start pl-4">
@@ -124,14 +124,14 @@ export const Layout = (): JSX.Element => {
                   </Button>
                 </Link>
               </div>
-              <SheetFooter></SheetFooter>
+              <SheetFooter />
             </SheetContent>
           </Sheet>
         </header>
 
         <Outlet />
 
-        <footer></footer>
+        <footer />
       </div>
 
       <Toaster />

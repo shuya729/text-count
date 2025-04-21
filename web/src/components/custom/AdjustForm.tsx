@@ -11,9 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { adjustFormSchema } from "@/constants/adjustFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { JSX } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import type { JSX } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import type { z } from "zod";
 
 interface AdjustFormProps {
   input: string;

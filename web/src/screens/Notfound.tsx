@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { JSX } from "react";
+import type { JSX } from "react";
 import { Link } from "react-router";
 
 export const Notfound = (): JSX.Element => {

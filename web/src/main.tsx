@@ -9,17 +9,20 @@ import { Contact } from "./screens/Contact";
 import { Notfound } from "./screens/Notfound";
 import { Privacy } from "./screens/Privacy";
 
-createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/term" element={<Term />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/*" element={<Notfound />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
-);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  createRoot(rootElement).render(
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/term" element={<Term />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/*" element={<Notfound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}

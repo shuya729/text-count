@@ -20,8 +20,8 @@ const app = initializeApp(firebaseConfig);
 
 // デバッグ時のみAppCheckデバッグトークンを使用
 if (import.meta.env.DEV) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  (self as unknown as Record<string, unknown>).FIREBASE_APPCHECK_DEBUG_TOKEN =
+    true;
 }
 
 initializeAppCheck(app, {

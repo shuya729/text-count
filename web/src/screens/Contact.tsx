@@ -13,10 +13,10 @@ import { contactFormSchema } from "@/constants/contactFormSchema";
 import { saveContact } from "@/service/saveContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { JSX, useState } from "react";
+import { type JSX, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import type { z } from "zod";
 
 export const Contact = (): JSX.Element => {
   const [sending, setSending] = useState(false);

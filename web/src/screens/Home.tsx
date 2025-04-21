@@ -3,10 +3,10 @@ import { AdjustDialog } from "@/components/custom/AdjustDialog";
 import { AdjustDrawer } from "@/components/custom/AdjustDrawer";
 import { ControlPanel } from "@/components/custom/ControlPanel";
 import { TextEditor } from "@/components/custom/TextEditor";
-import { adjustFormSchema } from "@/constants/adjustFormSchema";
-import { JSX, useState } from "react";
+import type { adjustFormSchema } from "@/constants/adjustFormSchema";
+import { type JSX, useState } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
+import type { z } from "zod";
 import { adjustText } from "@/service/adjustText";
 
 interface TextSet {

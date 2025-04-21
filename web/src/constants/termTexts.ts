@@ -1,4 +1,10 @@
-export const termTexts = [
+export interface TermText {
+  type: string; // headline or text
+  text: string;
+  indent: number; // 0 or 1 or 2
+}
+
+export const termTexts: TermText[] = [
   {
     "type": "text",
     "text":

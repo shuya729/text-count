@@ -6,11 +6,11 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { JSX } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+import type { JSX } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import type { z } from "zod";
 import { AdjustForm } from "@/components/custom/AdjustForm";
-import { adjustFormSchema } from "@/constants/adjustFormSchema";
+import type { adjustFormSchema } from "@/constants/adjustFormSchema";
 
 interface AdjustDrawerProps {
   input: string;

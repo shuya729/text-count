@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import { JSX } from "react";
+import type { JSX } from "react";
 
 interface TextEditorProps {
   text: string;
@@ -27,17 +27,16 @@ export const TextEditor = (props: TextEditorProps): JSX.Element => {
         </div>
       </div>
     );
-  } else {
-    return (
-      <div className="flex justify-center px-6 py-2 sm:py-4">
-        <Textarea
-          placeholder="文章を入力して下さい。"
-          value={text}
-          disabled={disabled}
-          onChange={onChange}
-          className="max-w-3xl text-sm min-h-80 h-[calc(100svh-150px)] sm:h-[calc(100svh-200px)] disabled:opacity-100"
-        />
-      </div>
-    );
   }
+  return (
+    <div className="flex justify-center px-6 py-2 sm:py-4">
+      <Textarea
+        placeholder="文章を入力して下さい。"
+        value={text}
+        disabled={disabled}
+        onChange={onChange}
+        className="max-w-3xl text-sm min-h-80 h-[calc(100svh-150px)] sm:h-[calc(100svh-200px)] disabled:opacity-100"
+      />
+    </div>
+  );
 };

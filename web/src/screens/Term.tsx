@@ -1,5 +1,5 @@
 import { termTexts } from "@/constants/termTexts";
-import { JSX } from "react";
+import type { JSX } from "react";
 
 interface TermText {
   type: string; // headline or text
@@ -19,8 +19,8 @@ export const Term = (): JSX.Element => {
       <div className="w-full py-4 px-6 mx-auto max-w-4xl sm:px-18">
         <h2 className="text-center text-lg font-medium sm:py-4">利用規約</h2>
         <div className="py-6 sm:py-8">
-          {termTexts.map((termText, index) => (
-            <TermText key={index} {...termText} />
+          {termTexts.map((termText) => (
+            <TermText key={termText.text} {...termText} />
           ))}
           <div className="py-12 text-end">
             <span className="text-sm">以上</span>
@@ -39,20 +39,19 @@ const TermText = (termText: TermText): JSX.Element => {
       return (
         <h3 className="text-base font-semibold pt-10 pb-4 pl-4">{text}</h3>
       );
-    } else if (indent === 2) {
+    }
+    if (indent === 2) {
       return (
         <h3 className="text-base font-semibold pt-10 pb-4 pl-8">{text}</h3>
       );
-    } else {
-      return <h3 className="text-base font-semibold pt-10 pb-4">{text}</h3>;
     }
-  } else {
-    if (indent === 1) {
-      return <p className="py-1 text-sm pl-4">{text}</p>;
-    } else if (indent === 2) {
-      return <p className="py-1 text-sm pl-8">{text}</p>;
-    } else {
-      return <p className="py-1 text-sm">{text}</p>;
-    }
+    return <h3 className="text-base font-semibold pt-10 pb-4">{text}</h3>;
   }
+  if (indent === 1) {
+    return <p className="py-1 text-sm pl-4">{text}</p>;
+  }
+  if (indent === 2) {
+    return <p className="py-1 text-sm pl-8">{text}</p>;
+  }
+  return <p className="py-1 text-sm">{text}</p>;
 };

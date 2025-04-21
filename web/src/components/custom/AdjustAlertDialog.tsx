@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { JSX } from "react";
+import type { JSX } from "react";
 
 interface AdjustAlertDialogProps {
   open: boolean;
