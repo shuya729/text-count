@@ -8,6 +8,9 @@ import { type JSX, useState } from "react";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { adjustText } from "@/service/adjustText";
+// import { SquareAds } from "@/components/custom/SquareAds";
+// import { HorizontalAds } from "@/components/custom/HorizontalAds";
+// import { VerticalAds } from "@/components/custom/VerticalAds";
 
 interface TextSet {
   text: string;
@@ -98,8 +101,8 @@ export const Home = (): JSX.Element => {
     if (length < 200 || 2000 < length) {
       setAdjustForms(1);
     } else {
-      const isSm = window.matchMedia("(min-width: 40rem)");
-      if (!isSm.matches) {
+      const isSm = globalThis.matchMedia("(min-width: 40rem)").matches;
+      if (!isSm) {
         setAdjustForms(2);
       } else {
         setAdjustForms(3);
@@ -145,26 +148,38 @@ export const Home = (): JSX.Element => {
         content="AI文字数調整くんは、文章の文字数をAIで自然に調整できるツールです。レポート、ES、SNS投稿など文字数制限がある場面で便利です。現在200〜2000文字の範囲で調整可能です。"
       />
 
-      <ControlPanel
-        count={textSet.text.length}
-        onUndo={handleUndo}
-        onRedo={handleRedo}
-        onClear={handleClear}
-        onCopy={handleCopy}
-        onAdjust={handleAdjust}
-        disableUndo={undoStack.length === 0 || adjustStatus !== 0}
-        disableRedo={redoStack.length === 0 || adjustStatus !== 0}
-        disableClear={adjustStatus !== 0}
-        disableCopy={adjustStatus !== 0}
-        disableAdjust={adjustStatus !== 0}
-      />
+      <div className="flex flex-col pb-40 px-6 gap-2 sm:gap-4">
+        {/* <HorizontalAds /> */}
 
-      <TextEditor
-        text={textSet.text}
-        onChange={handleTextChange}
-        disabled={adjustStatus !== 0}
-        adjustStatus={adjustStatus}
-      />
+        <ControlPanel
+          count={textSet.text.length}
+          onUndo={handleUndo}
+          onRedo={handleRedo}
+          onClear={handleClear}
+          onCopy={handleCopy}
+          onAdjust={handleAdjust}
+          disableUndo={undoStack.length === 0 || adjustStatus !== 0}
+          disableRedo={redoStack.length === 0 || adjustStatus !== 0}
+          disableClear={adjustStatus !== 0}
+          disableCopy={adjustStatus !== 0}
+          disableAdjust={adjustStatus !== 0}
+        />
+
+        <div className="flex justify-center items-stretch lg:gap-6">
+          {/* <VerticalAds /> */}
+
+          <TextEditor
+            text={textSet.text}
+            onChange={handleTextChange}
+            disabled={adjustStatus !== 0}
+            adjustStatus={adjustStatus}
+          />
+
+          {/* <VerticalAds /> */}
+        </div>
+
+        {/* <SquareAds /> */}
+      </div>
 
       <AdjustAlertDialog
         open={adjustForms === 1}

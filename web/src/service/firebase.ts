@@ -18,10 +18,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// デバッグ時のみAppCheckデバッグトークンを使用
+// デバッグ時のみAppCheckのデバッグトークンを有効にする
 if (import.meta.env.DEV) {
-  (self as unknown as Record<string, unknown>).FIREBASE_APPCHECK_DEBUG_TOKEN =
-    true;
+  globalThis.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 }
 
 initializeAppCheck(app, {

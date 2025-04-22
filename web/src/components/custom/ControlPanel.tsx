@@ -34,7 +34,7 @@ export const ControlPanel = (props: ControlPanelProps): JSX.Element => {
     disableAdjust,
   } = props;
   return (
-    <div className="flex w-full h-fit justify-center items-center px-6">
+    <div className="flex w-full h-fit justify-center items-center">
       <div className="flex rounded-lg bg-sidebar border-sidebar-border border-1 p-2 gap-2 sm:gap-4">
         <div className="flex flex-col items-start gap-1">
           <Label

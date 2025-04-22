@@ -1,4 +1,5 @@
 import "./index.css";
+import "./global.d.ts";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { Layout } from "./screens/Layout";
