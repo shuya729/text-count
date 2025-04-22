@@ -10,7 +10,7 @@ import type { z } from "zod";
 import { adjustText } from "@/service/adjustText";
 // import { SquareAds } from "@/components/custom/SquareAds";
 // import { HorizontalAds } from "@/components/custom/HorizontalAds";
-// import { VerticalAds } from "@/components/custom/VerticalAds";
+import { VerticalAds } from "@/components/custom/VerticalAds";
 
 interface TextSet {
   text: string;
@@ -166,7 +166,7 @@ export const Home = (): JSX.Element => {
         />
 
         <div className="flex justify-center items-stretch lg:gap-6">
-          {/* <VerticalAds /> */}
+          <VerticalAds />
 
           <TextEditor
             text={textSet.text}
@@ -175,7 +175,7 @@ export const Home = (): JSX.Element => {
             adjustStatus={adjustStatus}
           />
 
-          {/* <VerticalAds /> */}
+          <VerticalAds />
         </div>
 
         {/* <SquareAds /> */}
