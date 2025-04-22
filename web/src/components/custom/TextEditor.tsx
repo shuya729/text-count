@@ -15,7 +15,7 @@ export const TextEditor = (props: TextEditorProps): JSX.Element => {
   if (adjustStatus === 1) {
     return (
       <div className="flex justify-center flex-auto w-full max-w-2xl min-h-80 h-[calc(100svh-214px)] sm:h-[calc(100svh-278px)] lg:h-[calc(100svh-198px)]">
-        <div className="border-input rounded-md border bg-transparent px-3 py-2 text-base shadow-xs outline-none cursor-not-allowed opacity-50 space-y-1">
+        <div className="w-full border-input rounded-md border bg-transparent px-3 py-2 text-base shadow-xs outline-none cursor-not-allowed opacity-50 space-y-1">
           <Skeleton className="h-4 w-[60%]" />
           <Skeleton className="h-4 w-[90%]" />
           <Skeleton className="h-4 w-[100%]" />
@@ -35,7 +35,7 @@ export const TextEditor = (props: TextEditorProps): JSX.Element => {
         value={text}
         disabled={disabled}
         onChange={onChange}
-        className="text-sm disabled:opacity-100"
+        className="w-full text-sm disabled:opacity-100"
       />
     </div>
   );
