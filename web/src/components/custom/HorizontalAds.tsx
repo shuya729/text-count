@@ -11,7 +11,7 @@ export const HorizontalAds = (): JSX.Element => {
   }, [isLg]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center lg:hidden">
       <ins
         className="adsbygoogle w-full h-20 max-w-3xl max-h-16 sm:max-h-20 block lg:hidden"
         data-ad-client="ca-pub-9057495563597980"

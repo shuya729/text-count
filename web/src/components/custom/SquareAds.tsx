@@ -11,7 +11,7 @@ export const SquareAds = (): JSX.Element => {
   }, [isLg]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center lg:hidden">
       <ins
         className="adsbygoogle w-full h-[calc(100svw-32px)] max-w-3xl max-h-80 block lg:hidden"
         data-ad-client="ca-pub-9057495563597980"

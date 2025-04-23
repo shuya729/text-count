@@ -11,7 +11,7 @@ export const VerticalAds = (): JSX.Element => {
   }, [isLg]);
 
   return (
-    <div className="flex justify-center items-center py-4">
+    <div className="justify-center items-center py-4 hidden lg:flex">
       <ins
         className="adsbygoogle h-full min-w-32 w-[calc(50svw-384px)] max-w-3xs hidden lg:block"
         data-ad-client="ca-pub-9057495563597980"

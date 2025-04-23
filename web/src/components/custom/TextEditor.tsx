@@ -31,7 +31,7 @@ export const TextEditor = (props: TextEditorProps): JSX.Element => {
   return (
     <div className="flex justify-center flex-auto w-full max-w-2xl min-h-80 h-[calc(100svh-214px)] sm:h-[calc(100svh-278px)] lg:h-[calc(100svh-198px)]">
       <Textarea
-        placeholder="文章を入力して下さい。"
+        placeholder="文章を入力して下さい。&#13;左上のボックスに入力中の文字数が表示され、右上のボタンよりAI文字数調整機能を利用できます。"
         value={text}
         disabled={disabled}
         onChange={onChange}
