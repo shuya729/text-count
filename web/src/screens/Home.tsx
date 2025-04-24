@@ -149,7 +149,7 @@ export const Home = (): JSX.Element => {
       />
 
       <div className="flex flex-col pb-6 px-6 gap-2 sm:gap-4">
-        {/* <HorizontalAds /> */}
+        {/* <HorizontalAds slot="4804367984" /> */}
 
         <ControlPanel
           count={textSet.text.length}
@@ -166,7 +166,7 @@ export const Home = (): JSX.Element => {
         />
 
         <div className="flex justify-center items-stretch lg:gap-6">
-          <VerticalAds />
+          <VerticalAds slot="272562846" />
 
           <TextEditor
             text={textSet.text}
@@ -175,10 +175,10 @@ export const Home = (): JSX.Element => {
             adjustStatus={adjustStatus}
           />
 
-          <VerticalAds />
+          <VerticalAds slot="9020236167" />
         </div>
 
-        {/* <SquareAds /> */}
+        {/* <SquareAds slot="2693425561" /> */}
       </div>
 
       <AdjustAlertDialog

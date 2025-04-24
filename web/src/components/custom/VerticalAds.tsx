@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useEffect, type JSX } from "react";
 
-export const VerticalAds = (): JSX.Element => {
+export const VerticalAds = ({ slot }: { slot: string }): JSX.Element => {
   const isLg = useMediaQuery("(min-width: 1024px)");
   useEffect(() => {
     if (isLg) {
@@ -15,7 +15,7 @@ export const VerticalAds = (): JSX.Element => {
       <ins
         className="adsbygoogle h-full min-w-32 w-[calc(50svw-384px)] max-w-3xs hidden lg:block"
         data-ad-client="ca-pub-9057495563597980"
-        data-ad-slot="4804367984"
+        data-ad-slot={slot}
         data-ad-format="auto"
         data-full-width-responsive="true"
       />
