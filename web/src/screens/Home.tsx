@@ -8,9 +8,9 @@ import { type JSX, useState } from "react";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { adjustText } from "@/service/adjustText";
-// import { SquareAds } from "@/components/custom/SquareAds";
-// import { HorizontalAds } from "@/components/custom/HorizontalAds";
-import { VerticalAds } from "@/components/custom/VerticalAds";
+import { TopAds } from "@/components/custom/TopAds";
+import { LeftAds } from "@/components/custom/LeftAds";
+import { RightAds } from "@/components/custom/RightAds";
 
 interface TextSet {
   text: string;
@@ -149,7 +149,7 @@ export const Home = (): JSX.Element => {
       />
 
       <div className="flex flex-col pb-6 px-6 gap-2 sm:gap-4">
-        {/* <HorizontalAds slot="4804367984" /> */}
+        <TopAds />
 
         <ControlPanel
           count={textSet.text.length}
@@ -166,7 +166,7 @@ export const Home = (): JSX.Element => {
         />
 
         <div className="flex justify-center items-stretch lg:gap-6">
-          <VerticalAds slot="272562846" />
+          <LeftAds />
 
           <TextEditor
             text={textSet.text}
@@ -175,10 +175,8 @@ export const Home = (): JSX.Element => {
             adjustStatus={adjustStatus}
           />
 
-          <VerticalAds slot="9020236167" />
+          <RightAds />
         </div>
-
-        {/* <SquareAds slot="2693425561" /> */}
       </div>
 
       <AdjustAlertDialog
