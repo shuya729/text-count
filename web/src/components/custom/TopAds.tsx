@@ -17,7 +17,7 @@ export const TopAds = (): JSX.Element => {
   return (
     <div className="flex justify-center">
       <ins
-        className="adsbygoogle w-full h-20 max-w-3xl max-h-16 sm:max-h-20 block"
+        className="adsbygoogle w-full h-20 max-w-2xl max-h-16 sm:max-h-20 block"
         data-ad-client="ca-pub-9057495563597980"
         data-ad-slot="4804367984"
       />
