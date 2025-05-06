@@ -27,9 +27,9 @@ export const AdjustDrawer = (props: AdjustDrawerProps): JSX.Element => {
         <DrawerHeader className="text-left">
           <DrawerTitle className="text-base">文字数を調整</DrawerTitle>
           <DrawerDescription className="text-sm">
-            AIは設定された文字数の±10%を目指して調整を行います。
+            設定した文字数±10%の範囲で調整を行います。
             <br />
-            調整に失敗する場合があります。
+            調整は失敗する場合があります。
           </DrawerDescription>
         </DrawerHeader>
 

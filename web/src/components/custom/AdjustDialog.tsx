@@ -26,9 +26,9 @@ export const AdjustDialog = (props: AdjustDialogProps): JSX.Element => {
         <DialogHeader>
           <DialogTitle className="text-base">文字数を調整</DialogTitle>
           <DialogDescription className="text-sm">
-            AIは設定された文字数の±10%を目指して調整を行います。
+            設定した文字数±10%の範囲で調整を行います。
             <br />
-            調整に失敗する場合があります。
+            調整は失敗する場合があります。
           </DialogDescription>
 
           <AdjustForm input={input} onSubmit={onSubmit} />
