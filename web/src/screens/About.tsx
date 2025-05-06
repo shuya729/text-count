@@ -20,7 +20,7 @@ export const About = (): JSX.Element => {
             AI文字数調整くんは、文字数カウントとAI文字数調整機能を搭載した、日本語の文章を編集するためのツールです。
           </p>
           <p className="py-1 text-sm">
-            レポートやエントリーシート（ES）、作文、SNS投稿など、文字数制限がある文章の編集に適しています。
+            レポートやエントリーシート（ES）、作文、SNS投稿など、文字数の指定や制限がある文章の編集に適しています。
           </p>
 
           <h3 className="text-base font-semibold pt-8">AI文字数調整機能</h3>
@@ -30,7 +30,7 @@ export const About = (): JSX.Element => {
           </p>
           <h4 className="text-base font-medium pl-4 pt-2">機能</h4>
           <p className="py-1 text-sm pl-8">
-            指定した目標文字数の±10%を目安として調整を行います。
+            指定した目標文字数の±10%の範囲で調整を行います。
           </p>
           <h4 className="text-base font-medium pl-4 pt-2">制限</h4>
           <p className="py-1 text-sm pl-8">
