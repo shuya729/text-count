@@ -23,6 +23,14 @@ interface AdjustFormProps {
 export const AdjustForm = (props: AdjustFormProps): JSX.Element => {
   const { input, onSubmit } = props;
 
+  const lowerCount = function (count: number): number {
+    return Math.ceil(count * 0.9);
+  }
+
+  const upperCount = function (count: number): number {
+    return Math.floor(count * 1.1);
+  }
+
   const adjustForm = useForm<z.infer<typeof adjustFormSchema>>({
     resolver: zodResolver(adjustFormSchema),
     defaultValues: { input: input, count: input.trim().length },
@@ -53,7 +61,7 @@ export const AdjustForm = (props: AdjustFormProps): JSX.Element => {
           name="count"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm">文字数</FormLabel>
+              <FormLabel className="text-sm">文字数（200〜2000文字に対応）</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -62,8 +70,8 @@ export const AdjustForm = (props: AdjustFormProps): JSX.Element => {
                   className="text-center"
                 />
               </FormControl>
-              <FormDescription className="text-sm">
-                現在、200〜2000文字に設定可能です。
+              <FormDescription className="text-sm text-center">
+                {`調整後の文字数： ${lowerCount(field.value)} ~ ${upperCount(field.value)} 文字`}
               </FormDescription>
               <FormMessage />
             </FormItem>
