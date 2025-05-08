@@ -26,7 +26,7 @@ export const AdjustAlertDialog = (
             この文章は文字数調整できません。
           </AlertDialogTitle>
           <AlertDialogDescription className="text-sm">
-            現在、文字数調整機能は200〜2000文字（末尾の空白・改行を除く）の文章に対応しています。
+            現在、文字数調整機能は 200〜2000文字 の文章に対応しています。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
