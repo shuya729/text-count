@@ -54,7 +54,7 @@ export const saveContact = onCall(
         state: 1,
         message: "不正な入力です。",
       };
-      logger.error({
+      logger.info({
         type: "functionLog",
         function: functionName,
         input: input,
@@ -77,17 +77,19 @@ export const saveContact = onCall(
         content: content,
         createdAt: Timestamp.now(),
       });
-    } catch {
+    } catch (e) {
       const ret: ContactOutput = {
         state: 1,
         message: "送信に失敗しました。",
       };
-      logger.error({
+      if (e instanceof Error) {
+        logger.error(e);
+      }
+      logger.info({
         type: "functionLog",
         function: functionName,
         input: input,
         output: ret,
-        times: 0,
         position: 2,
       });
       return ret;
@@ -112,12 +114,15 @@ export const saveContact = onCall(
           "Authorization": `Bearer ${lineChannelAccessToken.value()}`,
         },
       });
-    } catch {
+    } catch (e) {
       const ret: ContactOutput = {
         state: 1,
         message: "送信に失敗しました。",
       };
-      logger.error({
+      if (e instanceof Error) {
+        logger.error(e);
+      }
+      logger.info({
         type: "functionLog",
         function: functionName,
         input: input,

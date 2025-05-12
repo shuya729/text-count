@@ -164,6 +164,9 @@ const adjustTextFlow = ai.defineFlow(
         text = res.text.trim();
         texts.push(text);
       } catch (e) {
+        if (e instanceof Error) {
+          logger.error(e);
+        }
         position = 1;
         ret = adjustOutputSchema.parse({
           output: input,
@@ -202,11 +205,7 @@ const adjustTextFlow = ai.defineFlow(
       position: position,
     };
 
-    if (ret !== null && (ret.state === 0 || ret.state === 1)) {
-      logger.info(log);
-    } else {
-      logger.error(log);
-    }
+    logger.info(log);
 
     return ret;
   }
