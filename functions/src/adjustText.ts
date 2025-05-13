@@ -76,18 +76,18 @@ const system = (text: string, count: number): string => {
   const length: number = text.length;
   const diff: number = length - count;
   const sentences: number = Math.floor(Math.abs(diff) / 36);
-  const words: number = Math.floor(Math.abs(diff) / 3);
+  const words: number = Math.floor(Math.abs(diff) / 6);
 
   if (36 <= diff) {
-    return SUB_SENTENCES_PROMPT.replace("{sentences}", sentences.toString());
+    return SUB_SENTENCES_PROMPT.replace(/{sentences}/g, sentences.toString());
   }
   if (0 < diff) {
-    return SUB_WORDS_PROMPT.replace("{words}", words.toString());
+    return SUB_WORDS_PROMPT.replace(/{words}/g, words.toString());
   }
   if (-36 < diff) {
-    return ADD_WORDS_PROMPT.replace("{words}", words.toString());
+    return ADD_WORDS_PROMPT.replace(/{words}/g, words.toString());
   }
-  return ADD_SENTENCES_PROMPT.replace("{sentences}", sentences.toString());
+  return ADD_SENTENCES_PROMPT.replace(/{sentences}/g, sentences.toString());
 };
 
 /**
@@ -158,7 +158,7 @@ const adjustTextFlow = ai.defineFlow(
       try {
         const res = await ai.generate({
           system: system(text, count),
-          prompt: text,
+          prompt: "# 入力\n ```\n" + text + "\n ```\n",
           config: {
             maxOutputTokens: 8000,
             temperature: 0.6,
