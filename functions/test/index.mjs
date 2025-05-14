@@ -265,21 +265,33 @@ async function main() {
 
   const output = [];
   let errorCount = 0;
+  let times = 0;
+  let org_times = 0;
   let state_0 = 0;
   let state_1 = 0;
   let state_2 = 0;
+  let org_state_0 = 0;
+  let org_state_1 = 0;
+  let org_state_2 = 0;
   const inputLength = inputJson.length;
   for (let i = 0; i < inputLength; i++) {
     console.log(i);
 
-    const input = inputJson[i].input;
-    const count = inputJson[i].tgt_count;
+    const input = inputJson[i];
 
     const result = await adjustTextFlow({
-      input: input,
-      count: count,
+      input: input.input,
+      count: input.tgt_count,
     });
     output.push(result);
+
+    if (input.state == 0) {
+      org_state_0++;
+    } else if (input.state == 1) {
+      org_state_1++;
+    } else if (input.state == 2) {
+      org_state_2++;
+    }
 
     if (result.state == 0) {
       errorCount = 0;
@@ -291,6 +303,9 @@ async function main() {
       errorCount++;
       state_2++;
     }
+
+    org_times += Number(input.times);
+    times += Number(result.times);
 
     if (errorCount > 2) {
       console.log("エラーが複数回発生しました。処理を中断します。");
@@ -304,10 +319,12 @@ async function main() {
   await writeFile("./data/output.json", outputJson, "utf-8");
 
   console.table([
-    { state: 0, count: state_0 },
-    { state: 1, count: state_1 },
-    { state: 2, count: state_2 },
+    { state: 0, count: state_0, org_count: org_state_0 },
+    { state: 1, count: state_1, org_count: org_state_1 },
+    { state: 2, count: state_2, org_count: org_state_2 },
   ]);
+  console.log("合計処理回数　　:", times);
+  console.log("元の合計処理回数:", org_times);
 }
 
 main();
