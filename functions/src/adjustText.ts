@@ -1,8 +1,7 @@
 import { onCallGenkit } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import { defineSecret } from "firebase-functions/params";
 import { genkit, z } from "genkit";
-import googleAI, { gemini20Flash } from "@genkit-ai/googleai";
+import { gemini20Flash, vertexAI } from "@genkit-ai/vertexai";
 import { enableFirebaseTelemetry } from "@genkit-ai/firebase";
 import {
   ADD_SENTENCES_PROMPT,
@@ -13,8 +12,10 @@ import {
 
 enableFirebaseTelemetry();
 
-const geminiApiKey = defineSecret("GEMINI_API_KEY");
-const ai = genkit({ plugins: [googleAI()], model: gemini20Flash });
+const ai = genkit({
+  plugins: [vertexAI({ location: "us-central1" })],
+  model: gemini20Flash,
+});
 
 const adjustInputSchema = z
   .object({
@@ -217,7 +218,4 @@ const adjustTextFlow = ai.defineFlow(
   }
 );
 
-export const adjustText = onCallGenkit(
-  { secrets: [geminiApiKey] },
-  adjustTextFlow
-);
+export const adjustText = onCallGenkit(adjustTextFlow);
