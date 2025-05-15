@@ -162,7 +162,7 @@ const adjustTextFlow = ai.defineFlow(
           prompt: "# 入力\n ```\n" + text + "\n ```\n",
           config: {
             maxOutputTokens: 8000,
-            temperature: 0.6,
+            temperature: 0.7,
             // topP: 0.5,
             // topK: 40,
           },

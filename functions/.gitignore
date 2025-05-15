@@ -13,3 +13,4 @@ node_modules/
 
 src/prompt*
 test/data/*
+test/prompt*
