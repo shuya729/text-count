@@ -34,7 +34,7 @@ export const About = (): JSX.Element => {
           </p>
           <h4 className="text-base font-medium pl-4 pt-2">制限</h4>
           <p className="py-1 text-sm pl-8">
-            現在、入力は100〜3000文字、出力は200〜2000文字の調整に対応しています。
+            現在、入力は100〜2000文字、出力は200〜2000文字の調整に対応しています。
           </p>
           <h4 className="text-base font-medium pl-4 pt-2">注意</h4>
           <p className="py-1 text-sm pl-8">

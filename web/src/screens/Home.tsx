@@ -98,7 +98,7 @@ export const Home = (): JSX.Element => {
 
   const handleAdjust = () => {
     const length = textSet.text.trim().length;
-    if (length < 100 || 3000 < length) {
+    if (length < 100 || 2000 < length) {
       setAdjustForms(1);
     } else {
       const isSm = globalThis.matchMedia("(min-width: 40rem)").matches;
