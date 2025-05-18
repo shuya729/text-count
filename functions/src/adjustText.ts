@@ -199,7 +199,7 @@ const adjustTextFlow = ai.defineFlow(
       ret = adjustOutputSchema.parse({
         output: closestText(texts, count),
         state: 1,
-        message: "文字数の調整に失敗しました。",
+        message: "文字数の調整に失敗しました。再度お試しください。",
       });
     }
 
