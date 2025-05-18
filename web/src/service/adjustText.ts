@@ -13,7 +13,10 @@ export async function adjustText(
   count: number
 ): Promise<Output> {
   // anlytics のイベントを記録
-  logEvent(analytics, "adjust_text", { input: input, count: count });
+  logEvent(analytics, "adjust_text", {
+    input_count: input.trim().length,
+    tgt_count: count,
+  });
 
   const adjustText = httpsCallable(functions, "adjustText");
   try {
