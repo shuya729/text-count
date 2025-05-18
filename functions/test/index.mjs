@@ -28,16 +28,16 @@ const judge = (text, count) => {
 const system = (text, count) => {
   const length = text.length;
   const diff = length - count;
-  const sentences = Math.floor(Math.abs(diff) / 36);
-  const words = Math.floor(Math.abs(diff) / 6);
+  const sentences = Math.floor(Math.abs(diff) / 40);
+  const words = Math.floor(Math.abs(diff) / 8);
 
-  if (36 <= diff) {
+  if (40 <= diff) {
     return SUB_SENTENCES_PROMPT.replace(/{sentences}/g, sentences.toString());
   }
   if (0 < diff) {
     return SUB_WORDS_PROMPT.replace(/{words}/g, words.toString());
   }
-  if (-36 < diff) {
+  if (-40 < diff) {
     return ADD_WORDS_PROMPT.replace(/{words}/g, words.toString());
   }
   return ADD_SENTENCES_PROMPT.replace(/{sentences}/g, sentences.toString());
@@ -75,10 +75,10 @@ const closestText = (texts, count) => {
     return negClosestText;
   }
   const sum = negClosestDiff + posClosestDiff;
-  if (sum < -36) {
+  if (sum < -40) {
     return posClosestText;
   }
-  if (sum > 36) {
+  if (sum > 40) {
     return negClosestText;
   }
   if (inputDiff < 0) {
