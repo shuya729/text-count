@@ -151,7 +151,7 @@ const adjustTextFlow = ai.defineFlow(
     const functionName = "adjustText";
     let ret = null;
     let position = 0;
-    let text = input.trim();
+    let text = input.replace(/\*\*/g, "").trim();
     const texts: string[] = [text];
 
     let i = 0;
@@ -159,7 +159,7 @@ const adjustTextFlow = ai.defineFlow(
       try {
         const res = await ai.generate({
           system: system(text, count),
-          prompt: "# 入力\n ```\n" + text + "\n ```\n",
+          prompt: `# 入力\n \`\`\`\n${text}\n \`\`\`\n`,
           config: {
             maxOutputTokens: 8000,
             temperature: 0.7,
@@ -168,7 +168,7 @@ const adjustTextFlow = ai.defineFlow(
           },
         });
 
-        text = res.text.trim();
+        text = res.text.replace(/\*\*/g, "").trim();
         texts.push(text);
       } catch (e) {
         if (e instanceof Error) {
