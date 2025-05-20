@@ -15,7 +15,7 @@ import { RightAds } from "@/components/custom/RightAds";
 interface TextSet {
   text: string;
   date: number;
-  func: number; // 0: input, 1: undo, 2: redo, 3: clear, 4: adjust
+  func: number; // 0: input, 1: undo, 2: redo, 3: clear, 4: adjust 5:adjust:start
 }
 
 interface AdjustRes {
@@ -36,13 +36,14 @@ export const Home = (): JSX.Element => {
   const [undoStack, setUndoStack] = useState<string[]>([]);
   const [redoStack, setRedoStack] = useState<string[]>([]);
 
-  const updateTextSet = (inputSet: TextSet) => {
+  const updateTextSet = (textProps: { text: string, func: number }) => {
+    const inputSet: TextSet = { text: textProps.text, date: Date.now(), func: textProps.func };
     const lastSet = textSet;
     if (inputSet.func === 1) {
       setRedoStack([...redoStack, lastSet.text]);
     } else if (inputSet.func === 2) {
       setUndoStack([...undoStack, lastSet.text]);
-    } else {
+    } else if (inputSet.func !== 4) {
       if (redoStack.length > 0) {
         setRedoStack([]);
       }
@@ -58,7 +59,7 @@ export const Home = (): JSX.Element => {
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value;
-    updateTextSet({ text: text, date: Date.now(), func: 0 });
+    updateTextSet({ text: text, func: 0 });
   };
 
   const handleUndo = () => {
@@ -67,7 +68,7 @@ export const Home = (): JSX.Element => {
       const text = stack.pop();
       setUndoStack(stack);
       if (text !== undefined) {
-        updateTextSet({ text: text, date: Date.now(), func: 1 });
+        updateTextSet({ text: text, func: 1 });
       }
     }
   };
@@ -78,13 +79,13 @@ export const Home = (): JSX.Element => {
       const text = stack.pop();
       setRedoStack(stack);
       if (text !== undefined) {
-        updateTextSet({ text: text, date: Date.now(), func: 2 });
+        updateTextSet({ text: text, func: 2 });
       }
     }
   };
 
   const handleClear = () => {
-    updateTextSet({ text: "", date: Date.now(), func: 3 });
+    updateTextSet({ text: "", func: 3 });
   };
 
   const handleCopy = async () => {
@@ -119,23 +120,25 @@ export const Home = (): JSX.Element => {
     setAdjustForms(0);
     const adjustRes: AdjustRes = await adjustText(values.input, values.count);
 
-    updateTextSet({ text: "", date: Date.now(), func: 4 });
-    setAdjustStatus(2);
-
     if (adjustRes.state === 0) {
-      let text = "";
-      const intervalId = setInterval(() => {
-        if (text.length < adjustRes.output.length) {
-          text += adjustRes.output[text.length];
-          updateTextSet({ text: text, date: Date.now(), func: 4 });
-        } else {
-          clearInterval(intervalId);
-          setAdjustStatus(0);
-        }
-      }, 20);
+      updateTextSet({ text: "", func: 5 });
+      setAdjustStatus(2);
+      writeOutput(adjustRes.output, Date.now());
     } else {
-      updateTextSet({ text: adjustRes.output, date: Date.now(), func: 4 });
+      updateTextSet({ text: adjustRes.output, func: 5 });
       toast.error(adjustRes.message);
+      setAdjustStatus(0);
+    }
+  };
+
+  const writeOutput = (output: string, baseDate: number) => {
+    const diff = Math.max(0, Date.now() - baseDate);
+    const end = Math.floor(diff / 10);
+    if (end < output.length) {
+      updateTextSet({ text: output.slice(0, end), func: 4 });
+      setTimeout(() => writeOutput(output, baseDate), 10);
+    } else {
+      updateTextSet({ text: output, func: 4 });
       setAdjustStatus(0);
     }
   };
