@@ -17,23 +17,19 @@ import type { z } from "zod";
 
 interface AdjustFormProps {
   input: string;
+  count: number;
   onSubmit: SubmitHandler<z.infer<typeof adjustFormSchema>>;
 }
 
 export const AdjustForm = (props: AdjustFormProps): JSX.Element => {
-  const { input, onSubmit } = props;
+  const { input, count, onSubmit } = props;
 
-  const lowerCount = function (count: number): number {
-    return Math.ceil(count * 0.9);
-  }
-
-  const upperCount = function (count: number): number {
-    return Math.floor(count * 1.1);
-  }
+  const lowerCount = (count: number): number => Math.ceil(count * 0.9);
+  const upperCount = (count: number): number => Math.floor(count * 1.1);
 
   const adjustForm = useForm<z.infer<typeof adjustFormSchema>>({
     resolver: zodResolver(adjustFormSchema),
-    defaultValues: { input: input, count: input.trim().length },
+    defaultValues: { input: input, count: count },
   });
 
   return (

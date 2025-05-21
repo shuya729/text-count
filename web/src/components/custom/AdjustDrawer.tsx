@@ -14,13 +14,14 @@ import type { adjustFormSchema } from "@/constants/adjustFormSchema";
 
 interface AdjustDrawerProps {
   input: string;
+  count: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: SubmitHandler<z.infer<typeof adjustFormSchema>>;
 }
 
 export const AdjustDrawer = (props: AdjustDrawerProps): JSX.Element => {
-  const { input, open, onOpenChange, onSubmit } = props;
+  const { input, count, open, onOpenChange, onSubmit } = props;
   return (
     <Drawer open={open} onOpenChange={onOpenChange} repositionInputs={false}>
       <DrawerContent>
@@ -33,7 +34,7 @@ export const AdjustDrawer = (props: AdjustDrawerProps): JSX.Element => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <AdjustForm input={input} onSubmit={onSubmit} />
+        <AdjustForm input={input} count={count} onSubmit={onSubmit} />
         <DrawerFooter />
       </DrawerContent>
     </Drawer>

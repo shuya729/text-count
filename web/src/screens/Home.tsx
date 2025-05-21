@@ -28,6 +28,7 @@ export const Home = (): JSX.Element => {
   const [adjustStatus, setAdjustStatus] = useState<number>(0);
   const [adjustForms, setAdjustForms] = useState<number>(0);
 
+  const [lastCount, setLastCount] = useState<number>(0);
   const [textSet, setTextSet] = useState<TextSet>({
     text: "",
     date: Date.now(),
@@ -118,6 +119,7 @@ export const Home = (): JSX.Element => {
   const onSubmit = async (values: z.infer<typeof adjustFormSchema>) => {
     setAdjustStatus(1);
     setAdjustForms(0);
+    setLastCount(values.count);
     const adjustRes: AdjustRes = await adjustText(values.input, values.count);
 
     if (adjustRes.state === 0) {
@@ -189,6 +191,7 @@ export const Home = (): JSX.Element => {
 
       <AdjustDrawer
         input={textSet.text}
+        count={lastCount || textSet.text.trim().length}
         open={adjustForms === 2}
         onOpenChange={formsOpenChange}
         onSubmit={onSubmit}
@@ -196,6 +199,7 @@ export const Home = (): JSX.Element => {
 
       <AdjustDialog
         input={textSet.text}
+        count={lastCount || textSet.text.trim().length}
         open={adjustForms === 3}
         onOpenChange={formsOpenChange}
         onSubmit={onSubmit}

@@ -13,13 +13,14 @@ import type { adjustFormSchema } from "@/constants/adjustFormSchema";
 
 interface AdjustDialogProps {
   input: string;
+  count: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: SubmitHandler<z.infer<typeof adjustFormSchema>>;
 }
 
 export const AdjustDialog = (props: AdjustDialogProps): JSX.Element => {
-  const { input, open, onOpenChange, onSubmit } = props;
+  const { input, count, open, onOpenChange, onSubmit } = props;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
@@ -31,7 +32,7 @@ export const AdjustDialog = (props: AdjustDialogProps): JSX.Element => {
             調整は失敗する場合があります。
           </DialogDescription>
 
-          <AdjustForm input={input} onSubmit={onSubmit} />
+          <AdjustForm input={input} count={count} onSubmit={onSubmit} />
         </DialogHeader>
       </DialogContent>
     </Dialog>
