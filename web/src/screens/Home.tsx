@@ -4,7 +4,7 @@ import { AdjustDrawer } from "@/components/custom/AdjustDrawer";
 import { ControlPanel } from "@/components/custom/ControlPanel";
 import { TextEditor } from "@/components/custom/TextEditor";
 import type { adjustFormSchema } from "@/constants/adjustFormSchema";
-import { type JSX, useState } from "react";
+import { type JSX, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { adjustText } from "@/service/adjustText";
@@ -37,7 +37,7 @@ export const Home = (): JSX.Element => {
   const [undoStack, setUndoStack] = useState<string[]>([]);
   const [redoStack, setRedoStack] = useState<string[]>([]);
 
-  const updateTextSet = (textProps: { text: string, func: number }) => {
+  const updateTextSet = useCallback((textProps: { text: string, func: number }) => {
     const inputSet: TextSet = { text: textProps.text, date: Date.now(), func: textProps.func };
     const lastSet = textSet;
     if (inputSet.func === 1) {
@@ -56,14 +56,14 @@ export const Home = (): JSX.Element => {
       }
     }
     setTextSet(inputSet);
-  };
+  }, [textSet, undoStack, redoStack]);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = event.target.value;
     updateTextSet({ text: text, func: 0 });
   };
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     const stack = [...undoStack];
     if (stack.length > 0) {
       const text = stack.pop();
@@ -72,9 +72,9 @@ export const Home = (): JSX.Element => {
         updateTextSet({ text: text, func: 1 });
       }
     }
-  };
+  }, [undoStack, updateTextSet]);
 
-  const handleRedo = () => {
+  const handleRedo = useCallback(() => {
     const stack = [...redoStack];
     if (stack.length > 0) {
       const text = stack.pop();
@@ -83,22 +83,22 @@ export const Home = (): JSX.Element => {
         updateTextSet({ text: text, func: 2 });
       }
     }
-  };
+  }, [redoStack, updateTextSet]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     updateTextSet({ text: "", func: 3 });
-  };
+  }, [updateTextSet]);
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(textSet.text);
       toast.success("クリップボードにコピーしました。");
     } catch {
       toast.error("クリップボードへのコピーに失敗しました。");
     }
-  };
+  }, [textSet.text]);
 
-  const handleAdjust = () => {
+  const handleAdjust = useCallback(() => {
     const length = textSet.text.trim().length;
     if (length < 100 || 2000 < length) {
       setAdjustForms(1);
@@ -110,7 +110,7 @@ export const Home = (): JSX.Element => {
         setAdjustForms(3);
       }
     }
-  };
+  }, [textSet.text]);
 
   const formsOpenChange = (open: boolean) => {
     if (!open) setAdjustForms(0);
@@ -144,6 +144,32 @@ export const Home = (): JSX.Element => {
       setAdjustStatus(0);
     }
   };
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (event: KeyboardEvent) => {
+      const isMac = (navigator.userAgentData?.platform ?? "").includes("mac") || navigator.userAgent.includes("Mac");
+      const ctrlKey = isMac ? event.metaKey : event.ctrlKey;
+      if (ctrlKey) {
+        if ((isMac && event.shiftKey && event.key === "z") || (!isMac && event.key === "y")) {
+          event.preventDefault();
+          handleRedo();
+        } else if (event.key === "z") {
+          event.preventDefault();
+          handleUndo();
+        } else if (event.key === "Enter") {
+          if (adjustStatus === 0) {
+            event.preventDefault();
+            handleAdjust();
+          }
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleGlobalKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleGlobalKeyDown);
+    };
+  }, [adjustStatus, handleUndo, handleRedo, handleAdjust]);
 
   return (
     <>
