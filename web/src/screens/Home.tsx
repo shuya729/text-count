@@ -50,7 +50,7 @@ export const Home = (): JSX.Element => {
       }
       if (
         lastSet.text !== inputSet.text &&
-        inputSet.date - lastSet.date > 600
+        inputSet.date - lastSet.date > 500
       ) {
         setUndoStack([...undoStack, lastSet.text]);
       }
