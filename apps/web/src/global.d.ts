@@ -7,7 +7,7 @@ interface NavigatorUAData {
 
 declare global {
   var FIREBASE_APPCHECK_DEBUG_TOKEN: boolean;
-  var adsbygoogle: { [key: string]: unknown }[];
+  var adsbygoogle: Record<string, unknown>[];
 
   interface Navigator {
     userAgentData?: NavigatorUAData;
