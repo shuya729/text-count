@@ -31,7 +31,7 @@ const adjustInputSchema = z
       .max(2000, "目標文字数は2000以下で入力して下さい。"),
   })
   .refine(
-    (args) => {
+    (args: { input: string, count: number }) => {
       const { input, count } = args;
       return !judge(input, count);
     },
