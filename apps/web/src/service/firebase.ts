@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFunctions } from "firebase/functions";
+import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 import {
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
@@ -17,12 +17,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-// デバッグ時のみAppCheckのデバッグトークンを有効にする
-if (import.meta.env.DEV) {
-  globalThis.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-}
-
 initializeAppCheck(app, {
   provider: new ReCaptchaEnterpriseProvider(
     "6LcIhgsrAAAAAMIAf98P2oRYvsrAdFhBGTaFKFOO"
@@ -31,3 +25,8 @@ initializeAppCheck(app, {
 });
 export const analytics = getAnalytics(app);
 export const functions = getFunctions(app, "asia-northeast1");
+
+if (import.meta.env.DEV) {
+  globalThis.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  connectFunctionsEmulator(functions, "127.0.0.1", 5001);
+}
