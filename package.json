@@ -3,13 +3,22 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"workspaces": ["apps/*"],
+	"workspaces": [
+		"apps/*"
+	],
 	"scripts": {
 		"lint": "eslint ."
+	},
+	"dependencies": {
+		"firebase": "^11.8.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.27.0",
 		"eslint": "^9.27.0",
+		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-react-hooks": "^5.1.0",
+		"eslint-plugin-react-refresh": "^0.4.19",
+		"globals": "^15.15.0",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.33.0"
 	}
