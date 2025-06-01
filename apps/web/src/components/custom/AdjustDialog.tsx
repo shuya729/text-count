@@ -4,10 +4,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../../components/ui/dialog";
+} from "../ui/dialog";
 import type { JSX } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { AdjustForm } from "../../components/custom/AdjustForm";
+import { AdjustForm } from "../custom/AdjustForm";
 import type { AdjustTextInput } from "@/types/adjustTextTypes";
 
 interface AdjustDialogProps {

@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../../components/ui/alert-dialog";
+} from "../ui/alert-dialog";
 import type { JSX } from "react";
 
 interface AdjustAlertDialogProps {
