@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { useContact } from "../hooks/useContact";
+import { Button } from "../components/ui/button";
 import {
   Form,
   FormControl,
@@ -6,38 +7,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { contactFormSchema } from "@/constants/contactFormSchema";
-import { saveContact } from "@/service/saveContact";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from "../components/ui/form";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
 import { Loader2 } from "lucide-react";
-import { type JSX, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type { z } from "zod";
+import { type JSX } from "react";
 
 export const Contact = (): JSX.Element => {
-  const [sending, setSending] = useState(false);
-
-  const contactForm = useForm<z.infer<typeof contactFormSchema>>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: { name: "", mail: "", content: "" },
-  });
-
-  const onSubmit = async (values: z.infer<typeof contactFormSchema>) => {
-    setSending(true);
-    const res = await saveContact(values.name, values.mail, values.content);
-    if (res.state === 0) {
-      contactForm.reset();
-      toast.success("問い合わせ内容を送信しました。");
-    } else {
-      toast.error("送信に失敗しました。");
-    }
-
-    setSending(false);
-  };
+  const { contactForm, sending, onSubmit } = useContact();
 
   return (
     <>

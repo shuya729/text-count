@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Separator } from "../../components/ui/separator";
 import { Copy, Loader2, RotateCcw, Redo, Undo, Edit2 } from "lucide-react";
 import type { JSX } from "react";
 
@@ -19,20 +19,20 @@ interface ControlPanelProps {
   disableAdjust: boolean;
 }
 
-export const ControlPanel = (props: ControlPanelProps): JSX.Element => {
-  const {
-    count,
-    onUndo,
-    onRedo,
-    onClear,
-    onCopy,
-    onAdjust,
-    disableUndo,
-    disableRedo,
-    disableClear,
-    disableCopy,
-    disableAdjust,
-  } = props;
+export const ControlPanel = ({
+  count,
+  onUndo,
+  onRedo,
+  onClear,
+  onCopy,
+  onAdjust,
+  disableUndo,
+  disableRedo,
+  disableClear,
+  disableCopy,
+  disableAdjust,
+}: ControlPanelProps
+): JSX.Element => {
   return (
     <div className="flex w-full h-fit justify-center items-center">
       <div className="flex rounded-lg bg-sidebar border-sidebar-border border-1 p-2 gap-2 sm:gap-4">

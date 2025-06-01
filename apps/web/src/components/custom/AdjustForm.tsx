@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import type { AdjustTextInput } from "@/types/adjustTextTypes";
+import { Button } from "../../components/ui/button";
 import {
   Form,
   FormControl,
@@ -7,29 +8,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { adjustFormSchema } from "@/constants/adjustFormSchema";
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
+import { adjustFormSchema } from "../../constants/adjustFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { JSX } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { z } from "zod";
 
 interface AdjustFormProps {
-  input: string;
+  text: string;
   count: number;
-  onSubmit: SubmitHandler<z.infer<typeof adjustFormSchema>>;
+  onSubmit: SubmitHandler<AdjustTextInput>;
 }
 
-export const AdjustForm = (props: AdjustFormProps): JSX.Element => {
-  const { input, count, onSubmit } = props;
+export const AdjustForm = ({ text, count, onSubmit }: AdjustFormProps): JSX.Element => {
 
   const lowerCount = (count: number): number => Math.ceil(count * 0.9);
   const upperCount = (count: number): number => Math.floor(count * 1.1);
 
   const adjustForm = useForm<z.infer<typeof adjustFormSchema>>({
     resolver: zodResolver(adjustFormSchema),
-    defaultValues: { input: input, count: count },
+    defaultValues: { text: text, count: count },
   });
 
   return (
@@ -41,7 +41,7 @@ export const AdjustForm = (props: AdjustFormProps): JSX.Element => {
         <div className="hidden">
           <FormField
             control={adjustForm.control}
-            name="input"
+            name="text"
             render={({ field }) => (
               <FormItem>
                 <FormControl>

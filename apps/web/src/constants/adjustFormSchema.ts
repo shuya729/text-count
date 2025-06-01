@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const adjustFormSchema = z
   .object({
-    input: z.string().trim(),
+    text: z.string().trim(),
     count: z.coerce
       .number()
       .int({ message: "目標文字数は整数で入力して下さい。" })
@@ -10,9 +10,8 @@ export const adjustFormSchema = z
       .max(2000, { message: "目標文字数は2000以下で入力して下さい。" }),
   })
   .refine(
-    (args) => {
-      const { input, count } = args;
-      const length = input.trim().length;
+    ({ text, count }) => {
+      const length = text.trim().length;
       return length < count * 0.9 || length > count * 1.1;
     },
     {

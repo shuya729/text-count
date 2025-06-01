@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "../../components/ui/skeleton";
+import { Textarea } from "../../components/ui/textarea";
 import type { JSX } from "react";
 
 interface TextEditorProps {
@@ -9,8 +9,7 @@ interface TextEditorProps {
   adjustStatus: number;
 }
 
-export const TextEditor = (props: TextEditorProps): JSX.Element => {
-  const { text, onChange, disabled, adjustStatus } = props;
+export const TextEditor = ({ text, onChange, disabled, adjustStatus }: TextEditorProps): JSX.Element => {
 
   if (adjustStatus === 1) {
     return (

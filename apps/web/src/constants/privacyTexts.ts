@@ -1,4 +1,6 @@
-export const privacyTexts = [
+import type { TermTextProps } from "src/components/custom/TermText";
+
+export const privacyTexts: TermTextProps[] = [
   {
     "type": "text",
     "text":

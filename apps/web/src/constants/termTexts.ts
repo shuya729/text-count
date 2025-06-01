@@ -1,10 +1,6 @@
-export interface TermText {
-  type: string; // headline or text
-  text: string;
-  indent: number; // 0 or 1 or 2
-}
+import type { TermTextProps } from "src/components/custom/TermText";
 
-export const termTexts: TermText[] = [
+export const termTexts: TermTextProps[] = [
   {
     "type": "text",
     "text":

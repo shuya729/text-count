@@ -19,7 +19,7 @@ const ai = genkit({
 
 const adjustInputSchema = z
   .object({
-    input: z
+    text: z
       .string()
       .trim()
       .min(100, "入力文字数は100文字以上で入力してください。")
@@ -31,9 +31,8 @@ const adjustInputSchema = z
       .max(2000, "目標文字数は2000以下で入力して下さい。"),
   })
   .refine(
-    (args: { input: string, count: number }) => {
-      const { input, count } = args;
-      return !judge(input, count);
+    ({ text, count }) => {
+      return !judge(text, count);
     },
     {
       message: "文字数は十分に調整されています。",
@@ -42,7 +41,7 @@ const adjustInputSchema = z
   );
 
 const adjustOutputSchema = z.object({
-  output: z.string().trim(),
+  text: z.string().trim(),
   state: z.number().int(), // 0: 成功, 1: 失敗, 2: エラー
   message: z.string(),
 });
@@ -50,8 +49,8 @@ const adjustOutputSchema = z.object({
 interface AdjustLog {
   type: "functionLog";
   function: string;
-  input: { input: string; count: number };
-  output: { output: string; state: number; message: string };
+  input: { text: string; count: number };
+  output: { text: string; state: number; message: string };
   times: number;
   position: number;
 }
@@ -147,18 +146,18 @@ const adjustTextFlow = ai.defineFlow(
     inputSchema: adjustInputSchema,
     outputSchema: adjustOutputSchema,
   },
-  async ({ input, count }) => {
+  async (props) => {
     const functionName = "adjustText";
     let ret = null;
     let position = 0;
-    let text = input.replace(/\*\*/g, "").trim();
+    let text = props.text.replace(/\*\*/g, "").trim();
     const texts: string[] = [text];
 
     let i = 0;
     for (i = 0; i < 5; i++) {
       try {
         const res = await ai.generate({
-          system: system(text, count),
+          system: system(text, props.count),
           prompt: `# 入力\n \`\`\`\n${text}\n \`\`\`\n`,
           config: {
             maxOutputTokens: 8000,
@@ -176,17 +175,17 @@ const adjustTextFlow = ai.defineFlow(
         }
         position = 1;
         ret = adjustOutputSchema.parse({
-          output: input,
+          text: props.text,
           state: 2,
           message: "エラーが発生しました。",
         });
         break;
       }
 
-      if (judge(text, count)) {
+      if (judge(text, props.count)) {
         position = 2;
         ret = adjustOutputSchema.parse({
-          output: text,
+          text: text,
           state: 0,
           message: "文字数を調整しました。",
         });
@@ -197,7 +196,7 @@ const adjustTextFlow = ai.defineFlow(
     if (ret === null) {
       position = 3;
       ret = adjustOutputSchema.parse({
-        output: closestText(texts, count),
+        text: closestText(texts, props.count),
         state: 1,
         message: "文字数の調整に失敗しました。再度お試しください。",
       });
@@ -206,7 +205,7 @@ const adjustTextFlow = ai.defineFlow(
     const log: AdjustLog = {
       type: "functionLog",
       function: functionName,
-      input: { input: input, count: count },
+      input: props,
       output: ret,
       times: i,
       position: position,

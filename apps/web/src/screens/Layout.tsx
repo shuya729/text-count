@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -6,11 +6,18 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Toaster } from "@/components/ui/sonner";
+} from "../components/ui/sheet";
+import { Toaster } from "../components/ui/sonner";
 import { Menu } from "lucide-react";
 import { type JSX, useState } from "react";
 import { Link, Outlet } from "react-router";
+
+const PageList = [
+  { to: '/about', label: 'ツールについて' },
+  { to: '/term', label: '利用規約' },
+  { to: '/privacy', label: 'プライバシー' },
+  { to: '/contact', label: '問い合わせ' },
+]
 
 export const Layout = (): JSX.Element => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -31,29 +38,13 @@ export const Layout = (): JSX.Element => {
 
             <div className="h-fit hidden sm:block">
               <div className="flex justify-between h-fit">
-                <Link to="/about">
-                  <Button variant="ghost" className="text-foreground">
-                    ツールについて
-                  </Button>
-                </Link>
-
-                <Link to="/term">
-                  <Button variant="ghost" className="text-foreground">
-                    利用規約
-                  </Button>
-                </Link>
-
-                <Link to="/privacy">
-                  <Button variant="ghost" className="text-foreground">
-                    プライバシー
-                  </Button>
-                </Link>
-
-                <Link to="/contact">
-                  <Button variant="ghost" className="text-foreground">
-                    問い合わせ
-                  </Button>
-                </Link>
+                {PageList.map((page) => (
+                  <Link key={"list-" + page.to} to={page.to}>
+                    <Button variant="ghost" className="text-foreground">
+                      {page.label}
+                    </Button>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
@@ -84,45 +75,17 @@ export const Layout = (): JSX.Element => {
               </SheetHeader>
 
               <div className="flex flex-col items-start pl-4">
-                <Link to="/about">
-                  <Button
-                    variant="ghost"
-                    onClick={() => setOpenMenu(false)}
-                    className="text-foreground"
-                  >
-                    ツールについて
-                  </Button>
-                </Link>
-
-                <Link to="/term">
-                  <Button
-                    variant="ghost"
-                    onClick={() => setOpenMenu(false)}
-                    className="text-foreground"
-                  >
-                    利用規約
-                  </Button>
-                </Link>
-
-                <Link to="/privacy">
-                  <Button
-                    variant="ghost"
-                    onClick={() => setOpenMenu(false)}
-                    className="text-foreground"
-                  >
-                    プライバシー
-                  </Button>
-                </Link>
-
-                <Link to="/contact">
-                  <Button
-                    variant="ghost"
-                    onClick={() => setOpenMenu(false)}
-                    className="text-foreground"
-                  >
-                    問い合わせ
-                  </Button>
-                </Link>
+                {PageList.map((page) => (
+                  <Link key={"sheet-" + page.to} to={page.to}>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setOpenMenu(false)}
+                      className="text-foreground w-full text-left"
+                    >
+                      {page.label}
+                    </Button>
+                  </Link>
+                ))}
               </div>
               <SheetFooter />
             </SheetContent>

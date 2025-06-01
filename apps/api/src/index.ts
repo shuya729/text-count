@@ -11,5 +11,5 @@ setGlobalOptions({
 });
 initializeApp();
 
-export { adjustText } from "./adjustText";
-export { saveContact } from "./saveContact";
+export { adjustText } from "./adjustText/";
+export { saveContact } from "./saveContact/";

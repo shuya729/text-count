@@ -1,20 +1,12 @@
 import { httpsCallable } from "firebase/functions";
-import { functions } from "@/service/firebase";
+import { functions } from "../firebase";
+import type { ContactInput, ContactOutput } from "@/types/contactTypes";
 
-interface Output {
-  state: number; // 0: 成功,  1: エラー
-  message: string;
-}
-
-export async function saveContact(
-  name: string,
-  mail: string,
-  content: string
-): Promise<Output> {
+export async function saveContact(input: ContactInput): Promise<ContactOutput> {
   const saveContact = httpsCallable(functions, "saveContact");
   try {
-    const res = await saveContact({ name: name, mail: mail, content: content });
-    return res.data as Output;
+    const res = await saveContact(input);
+    return res.data as ContactOutput;
   } catch {
     return {
       state: 1,

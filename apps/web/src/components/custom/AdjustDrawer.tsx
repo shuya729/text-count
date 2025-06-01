@@ -5,23 +5,28 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
+} from "../../components/ui/drawer";
 import type { JSX } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
-import { AdjustForm } from "@/components/custom/AdjustForm";
-import type { adjustFormSchema } from "@/constants/adjustFormSchema";
+import { AdjustForm } from "../../components/custom/AdjustForm";
+import type { adjustFormSchema } from "../../constants/adjustFormSchema";
 
 interface AdjustDrawerProps {
-  input: string;
+  text: string;
   count: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: SubmitHandler<z.infer<typeof adjustFormSchema>>;
 }
 
-export const AdjustDrawer = (props: AdjustDrawerProps): JSX.Element => {
-  const { input, count, open, onOpenChange, onSubmit } = props;
+export const AdjustDrawer = ({
+  text,
+  count,
+  open,
+  onOpenChange,
+  onSubmit,
+}: AdjustDrawerProps): JSX.Element => {
   return (
     <Drawer open={open} onOpenChange={onOpenChange} repositionInputs={false}>
       <DrawerContent>
@@ -34,7 +39,7 @@ export const AdjustDrawer = (props: AdjustDrawerProps): JSX.Element => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <AdjustForm input={input} count={count} onSubmit={onSubmit} />
+        <AdjustForm text={text} count={count} onSubmit={onSubmit} />
         <DrawerFooter />
       </DrawerContent>
     </Drawer>

@@ -1,30 +1,27 @@
 import { httpsCallable } from "firebase/functions";
-import { analytics, functions } from "@/service/firebase";
+import { analytics, functions } from "../firebase";
 import { logEvent } from "firebase/analytics";
+import type { AdjustTextInput, AdjustTextOutput } from "@/types/adjustTextTypes";
 
-interface Output {
-  output: string;
-  state: number; // 0: 成功, 1: 失敗, 2: エラー
-  message: string;
-}
-
-export async function adjustText(
-  input: string,
-  count: number
-): Promise<Output> {
+/**
+ * 文字数を調整する関数
+ * @param {AdjustTextInput} input - 入力文字列と目標文字数
+ * @returns {Promise<AdjustTextOutput>} - 調整後の文字列と状態
+ */
+export async function adjustText(input: AdjustTextInput): Promise<AdjustTextOutput> {
   // anlytics のイベントを記録
   logEvent(analytics, "adjust_text", {
-    input_count: input.trim().length,
-    tgt_count: count,
+    input_count: input.text.trim().length,
+    tgt_count: input.count,
   });
 
   const adjustText = httpsCallable(functions, "adjustText");
   try {
-    const res = await adjustText({ input: input, count: count });
-    return res.data as Output;
+    const output = await adjustText(input);
+    return output.data as AdjustTextOutput;
   } catch {
     return {
-      output: input,
+      text: input.text,
       state: 2,
       message: "エラーが発生しました。",
     };

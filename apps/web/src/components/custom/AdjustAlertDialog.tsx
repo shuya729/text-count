@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "../../components/ui/alert-dialog";
 import type { JSX } from "react";
 
 interface AdjustAlertDialogProps {
@@ -14,10 +14,7 @@ interface AdjustAlertDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export const AdjustAlertDialog = (
-  props: AdjustAlertDialogProps
-): JSX.Element => {
-  const { open, onOpenChange } = props;
+export const AdjustAlertDialog = ({ open, onOpenChange }: AdjustAlertDialogProps): JSX.Element => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
