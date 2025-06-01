@@ -19,17 +19,38 @@ const ai = genkit({
 
 const adjustInputSchema = z
   .object({
-    text: z
-      .string()
-      .trim()
-      .min(100, "入力文字数は100文字以上で入力してください。")
-      .max(2000, "入力文字数は2000文字以下で入力してください。"),
+    // text: z
+    //   .string()
+    //   .trim()
+    //   .min(100, "入力文字数は100文字以上で入力してください。")
+    //   .max(2000, "入力文字数は2000文字以下で入力してください。"),
+    text: z.string().optional(), // 後で削除する
+    input: z.string().optional(), // 後で削除する
     count: z
       .number()
       .int("目標文字数は整数で入力して下さい。")
       .min(200, "目標文字数は200以上で入力して下さい。")
       .max(2000, "目標文字数は2000以下で入力して下さい。"),
   })
+  // 以下、後で削除する 
+  .transform((data) => {
+    const text = data.text || data.input || "";
+    return {
+      input: data.input || "",
+      text: text.trim(),
+      count: data.count,
+    };
+  })
+  .refine(
+    ({ text }) => {
+      return text.length >= 100 && text.length <= 2000;
+    },
+    {
+      message: "入力文字数は100文字以上2000文字以下で入力してください。",
+      path: ["text"],
+    }
+  )
+  // 
   .refine(
     ({ text, count }) => {
       return !judge(text, count);
@@ -41,16 +62,18 @@ const adjustInputSchema = z
   );
 
 const adjustOutputSchema = z.object({
-  text: z.string().trim(),
+  // text: z.string().trim(),
   state: z.number().int(), // 0: 成功, 1: 失敗, 2: エラー
   message: z.string(),
+  text: z.string().optional(), // 後で削除する
+  output: z.string().optional(), // 後で削除する
 });
 
 interface AdjustLog {
   type: "functionLog";
   function: string;
-  input: { text: string; count: number };
-  output: { text: string; state: number; message: string };
+  input: object;
+  output: object;
   times: number;
   position: number;
 }
@@ -146,7 +169,13 @@ const adjustTextFlow = ai.defineFlow(
     inputSchema: adjustInputSchema,
     outputSchema: adjustOutputSchema,
   },
-  async (props) => {
+  async (args) => {
+    // 後で削除する
+    const props = {
+      text: args.text || args.input || "",
+      count: args.count,
+    };
+    // 
     const functionName = "adjustText";
     let ret = null;
     let position = 0;
@@ -201,6 +230,9 @@ const adjustTextFlow = ai.defineFlow(
         message: "文字数の調整に失敗しました。再度お試しください。",
       });
     }
+
+    // 以下、後で削除する
+    ret.output = ret.text;
 
     const log: AdjustLog = {
       type: "functionLog",
