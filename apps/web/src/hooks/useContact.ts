@@ -1,6 +1,6 @@
-import type { ContactInput } from "@/types/contactTypes";
-import { contactFormSchema } from "../constants/contactFormSchema";
-import { saveContact } from "../service/saveContact";
+import type { ContactInput } from "~/types/contactTypes";
+import { contactFormSchema } from "@/constants/contactFormSchema";
+import { saveContact } from "@/service/saveContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

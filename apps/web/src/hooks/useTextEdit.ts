@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { adjustText } from "../service/adjustText";
-import type { AdjustTextInput, AdjustTextOutput } from "@/types/adjustTextTypes";
+import { adjustText } from "@/service/adjustText";
+import type { AdjustTextInput, AdjustTextOutput } from "~/types/adjustTextTypes";
 
 interface TextSet {
   text: string;
@@ -76,9 +76,9 @@ export const useTextEdit = () => {
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(textSet.text);
-      toast.success("¯êÃ×ÜüÉk³ÔüW~W_");
+      toast.success("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½kï¿½ï¿½ï¿½W~W_");
     } catch {
-      toast.error("¯êÃ×ÜüÉxn³Ôük1WW~W_");
+      toast.error("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xnï¿½ï¿½ï¿½k1WW~W_");
     }
   }, [textSet.text]);
 

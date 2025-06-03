@@ -1,13 +1,13 @@
-import { AdjustAlertDialog } from "../components/custom/AdjustAlertDialog";
-import { AdjustDialog } from "../components/custom/AdjustDialog";
-import { AdjustDrawer } from "../components/custom/AdjustDrawer";
-import { ControlPanel } from "../components/custom/ControlPanel";
-import { TextEditor } from "../components/custom/TextEditor";
+import { AdjustAlertDialog } from "@/components/custom/AdjustAlertDialog";
+import { AdjustDialog } from "@/components/custom/AdjustDialog";
+import { AdjustDrawer } from "@/components/custom/AdjustDrawer";
+import { ControlPanel } from "@/components/custom/ControlPanel";
+import { TextEditor } from "@/components/custom/TextEditor";
 import { type JSX } from "react";
-import { TopAds } from "../components/custom/TopAds";
-import { LeftAds } from "../components/custom/LeftAds";
-import { RightAds } from "../components/custom/RightAds";
-import { useTextEdit } from "../hooks/useTextEdit";
+import { TopAds } from "@/components/custom/TopAds";
+import { LeftAds } from "@/components/custom/LeftAds";
+import { RightAds } from "@/components/custom/RightAds";
+import { useTextEdit } from "@/hooks/useTextEdit";
 
 export const Home = (): JSX.Element => {
   const {

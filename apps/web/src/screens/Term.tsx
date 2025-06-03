@@ -1,6 +1,6 @@
-import { termTexts } from "../constants/termTexts";
+import { termTexts } from "@/constants/termTexts";
 import type { JSX } from "react";
-import { TermText } from "../components/custom/TermText";
+import { TermText } from "@/components/custom/TermText";
 
 export const Term = (): JSX.Element => {
   return (

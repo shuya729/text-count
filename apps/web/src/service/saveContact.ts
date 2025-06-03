@@ -1,6 +1,6 @@
 import { httpsCallable } from "firebase/functions";
-import { functions } from "../firebase";
-import type { ContactInput, ContactOutput } from "@/types/contactTypes";
+import { functions } from "@/firebase";
+import type { ContactInput, ContactOutput } from "~/types/contactTypes";
 
 export async function saveContact(input: ContactInput): Promise<ContactOutput> {
   const saveContact = httpsCallable(functions, "saveContact");

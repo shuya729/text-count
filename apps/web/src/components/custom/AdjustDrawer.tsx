@@ -5,12 +5,12 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "../ui/drawer";
+} from "@/components/ui/drawer";
 import type { JSX } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
-import { AdjustForm } from "../custom/AdjustForm";
-import type { adjustFormSchema } from "../../constants/adjustFormSchema";
+import { AdjustForm } from "@/components/custom/AdjustForm";
+import type { adjustFormSchema } from "@/constants/adjustFormSchema";
 
 interface AdjustDrawerProps {
   text: string;

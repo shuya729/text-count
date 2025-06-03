@@ -1,6 +1,6 @@
-import { TermText } from "../components/custom/TermText";
-import { Button } from "../components/ui/button";
-import { privacyTexts } from "../constants/privacyTexts";
+import { TermText } from "@/components/custom/TermText";
+import { Button } from "@/components/ui/button";
+import { privacyTexts } from "@/constants/privacyTexts";
 import type { JSX } from "react";
 import { Link } from "react-router";
 

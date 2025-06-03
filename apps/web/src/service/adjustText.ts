@@ -1,7 +1,7 @@
 import { httpsCallable } from "firebase/functions";
-import { analytics, functions } from "../firebase";
+import { analytics, functions } from "@/firebase";
 import { logEvent } from "firebase/analytics";
-import type { AdjustTextInput, AdjustTextOutput } from "@/types/adjustTextTypes";
+import type { AdjustTextInput, AdjustTextOutput } from "~/types/adjustTextTypes";
 
 /**
  * 文字数を調整する関数

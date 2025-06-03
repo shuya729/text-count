@@ -1,4 +1,4 @@
-import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useEffect, type JSX } from "react";
 
 export const RightAds = (): JSX.Element => {

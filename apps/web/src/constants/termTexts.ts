@@ -1,4 +1,4 @@
-import type { TermTextProps } from "src/components/custom/TermText";
+import type { TermTextProps } from "@/components/custom/TermText";
 
 export const termTexts: TermTextProps[] = [
   {

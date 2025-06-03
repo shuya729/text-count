@@ -1,5 +1,5 @@
-import type { AdjustTextInput } from "@/types/adjustTextTypes";
-import { Button } from "../ui/button";
+import type { AdjustTextInput } from "~/types/adjustTextTypes";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,9 +8,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { adjustFormSchema } from "../../constants/adjustFormSchema";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { adjustFormSchema } from "@/constants/adjustFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { JSX } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";

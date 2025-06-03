@@ -1,4 +1,4 @@
-import { Button } from "../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -6,8 +6,8 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "../components/ui/sheet";
-import { Toaster } from "../components/ui/sonner";
+} from "@/components/ui/sheet";
+import { Toaster } from "@/components/ui/sonner";
 import { Menu } from "lucide-react";
 import { type JSX, useState } from "react";
 import { Link, Outlet } from "react-router";

@@ -1,5 +1,5 @@
-import { Skeleton } from "../ui/skeleton";
-import { Textarea } from "../ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Textarea } from "@/components/ui/textarea";
 import type { JSX } from "react";
 
 interface TextEditorProps {
