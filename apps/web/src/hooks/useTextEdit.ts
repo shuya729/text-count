@@ -25,18 +25,18 @@ export const useTextEdit = () => {
     return { inputSet, lastSet };
   }, [textSet]);
 
-  const updateText = ((text: string) => {
+  const updateText = useCallback((text: string): void => {
     const { inputSet, lastSet } = updateTextSet(text);
     clearRedo();
     if (inputSet.text !== lastSet.text && inputSet.date - lastSet.date > 500) {
       addUndo(lastSet.text);
     }
-  });
+  }, [updateTextSet, clearRedo, addUndo]);
 
-  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const text = event.target.value;
     updateText(text);
-  };
+  }, [updateText]);
 
   const handleUndo = useCallback(() => {
     const text = undo(textSet);
@@ -52,11 +52,11 @@ export const useTextEdit = () => {
     }
   }, [textSet, redo, updateTextSet]);
 
-  const handleClear = (() => {
+  const handleClear = useCallback((): void => {
     updateText("");
-  });
+  }, [updateText]);
 
-  const handleCopy = (async () => {
+  const handleCopy = useCallback(async (): Promise<void> => {
     const text = textSet.text;
     try {
       await navigator.clipboard.writeText(text);
@@ -64,15 +64,15 @@ export const useTextEdit = () => {
     } catch {
       toast.error("クリップボードへのコピーに失敗しました");
     }
-  });
+  }, [textSet.text]);
 
   const handleAdjust = useCallback(() => {
     openAdjustForms(textSet);
   }, [openAdjustForms, textSet]);
 
-  const onSubmit = ((input: AdjustTextInput) => {
+  const onSubmit = useCallback((input: AdjustTextInput): void => {
     onSubmitForm(input, updateText, updateTextSet);
-  });
+  }, [onSubmitForm, updateText, updateTextSet]);
 
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
@@ -125,7 +125,19 @@ const useTextHistory = () => {
   const canUndo = undoStack.length > 0;
   const canRedo = redoStack.length > 0;
 
-  const undo = ((textSet: TextSet): string | undefined => {
+  const addUndo = useCallback((text: string): void => {
+    setUndoStack((prev) => [...prev, text]);
+  }, []);
+
+  const clearRedo = useCallback((): void => {
+    setRedoStack((prev) => prev.length > 0 ? [] : prev);
+  }, []);
+
+  const addRedo = useCallback((text: string): void => {
+    setRedoStack((prev) => [...prev, text]);
+  }, []);
+
+  const undo = useCallback((textSet: TextSet): string | undefined => {
     const stack = [...undoStack];
     if (stack.length > 0) {
       const text = stack.pop();
@@ -136,9 +148,9 @@ const useTextHistory = () => {
       }
     }
     return undefined;
-  });
+  }, [undoStack, addRedo]);
 
-  const redo = ((textSet: TextSet): string | undefined => {
+  const redo = useCallback((textSet: TextSet): string | undefined => {
     const stack = [...redoStack];
     if (stack.length > 0) {
       const text = stack.pop();
@@ -149,33 +161,13 @@ const useTextHistory = () => {
       }
     }
     return undefined;
-  });
-
-  const clearUndo = (() => {
-    if (undoStack.length > 0) {
-      setUndoStack([]);
-    }
-  });
-  const addUndo = ((text: string) => {
-    setUndoStack((prev) => [...prev, text]);
-  });
-
-  const clearRedo = (() => {
-    if (redoStack.length > 0) {
-      setRedoStack([]);
-    }
-  });
-  const addRedo = ((text: string) => {
-    setRedoStack((prev) => [...prev, text]);
-  });
-
+  }, [redoStack, addUndo]);
 
   return {
     undo,
     redo,
     canUndo,
     canRedo,
-    clearUndo,
     addUndo,
     clearRedo,
     addRedo,
@@ -187,7 +179,7 @@ const useAdjustForms = () => {
   const [adjustStatus, setAdjustStatus] = useState<number>(0);
   const [lastCount, setLastCount] = useState<number>(0);
 
-  const openAdjustForms = ((textSet: TextSet) => {
+  const openAdjustForms = useCallback((textSet: TextSet): void => {
     const length = textSet.text.trim().length;
     if (length < 100 || 2000 < length) {
       setAdjustForms(1);
@@ -199,17 +191,33 @@ const useAdjustForms = () => {
         setAdjustForms(3);
       }
     }
-  });
+  }, []);
 
-  const formsOpenChange = ((open: boolean) => {
+  const formsOpenChange = useCallback((open: boolean): void => {
     if (!open) setAdjustForms(0);
-  });
+  }, []);
 
-  const onSubmitForm = (async (
+  const writeOutput = useCallback((
+    output: string,
+    baseDate: number,
+    updateTextSet: (text: string) => object
+  ): void => {
+    const diff = Math.max(0, Date.now() - baseDate);
+    const end = Math.floor(diff / 10);
+    if (end < output.length) {
+      updateTextSet(output.slice(0, end));
+      setTimeout(() => writeOutput(output, baseDate, updateTextSet), 10);
+    } else {
+      updateTextSet(output);
+      setAdjustStatus(0);
+    }
+  }, []);
+
+  const onSubmitForm = useCallback(async (
     input: AdjustTextInput,
     updateText: (text: string) => void,
     updateTextSet: (text: string) => object
-  ) => {
+  ): Promise<void> => {
     setAdjustStatus(1);
     setAdjustForms(0);
     setLastCount(input.count);
@@ -224,23 +232,7 @@ const useAdjustForms = () => {
       toast.error(output.message);
       setAdjustStatus(0);
     }
-  });
-
-  const writeOutput = ((
-    output: string,
-    baseDate: number,
-    updateTextSet: (text: string) => object
-  ) => {
-    const diff = Math.max(0, Date.now() - baseDate);
-    const end = Math.floor(diff / 10);
-    if (end < output.length) {
-      updateTextSet(output.slice(0, end));
-      setTimeout(() => writeOutput(output, baseDate, updateTextSet), 10);
-    } else {
-      updateTextSet(output);
-      setAdjustStatus(0);
-    }
-  });
+  }, [writeOutput]);
 
   return {
     lastCount,
