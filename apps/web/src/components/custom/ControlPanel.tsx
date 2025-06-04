@@ -6,7 +6,7 @@ import { Copy, Loader2, RotateCcw, Redo, Undo, Edit2 } from "lucide-react";
 import type { JSX } from "react";
 
 interface ControlPanelProps {
-  count: number;
+  text: string;
   onUndo: () => void;
   onRedo: () => void;
   onClear: () => void;
@@ -20,7 +20,7 @@ interface ControlPanelProps {
 }
 
 export const ControlPanel = ({
-  count,
+  text,
   onUndo,
   onRedo,
   onClear,
@@ -45,7 +45,7 @@ export const ControlPanel = ({
           </Label>
           <Input
             id="count"
-            value={count}
+            value={text.length}
             disabled
             className="bg-background w-full max-w-24 px-0 shadow-none text-center disabled:pointer-events-auto disabled:cursor-text disabled:opacity-100"
           />

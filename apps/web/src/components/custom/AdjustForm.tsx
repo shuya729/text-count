@@ -18,18 +18,18 @@ import type { z } from "zod";
 
 interface AdjustFormProps {
   text: string;
-  count: number;
+  lastCount: number;
   onSubmit: SubmitHandler<AdjustTextInput>;
 }
 
-export const AdjustForm = ({ text, count, onSubmit }: AdjustFormProps): JSX.Element => {
+export const AdjustForm = ({ text, lastCount, onSubmit }: AdjustFormProps): JSX.Element => {
 
   const lowerCount = (count: number): number => Math.ceil(count * 0.9);
   const upperCount = (count: number): number => Math.floor(count * 1.1);
 
   const adjustForm = useForm<z.infer<typeof adjustFormSchema>>({
     resolver: zodResolver(adjustFormSchema),
-    defaultValues: { text: text, count: count },
+    defaultValues: { text: text, count: lastCount || text.trim().length },
   });
 
   return (

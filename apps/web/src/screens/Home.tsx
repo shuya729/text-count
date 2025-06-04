@@ -11,12 +11,12 @@ import { useTextEdit } from "@/hooks/useTextEdit";
 
 export const Home = (): JSX.Element => {
   const {
-    adjustStatus,
+    text,
     adjustForms,
+    adjustStatus,
     lastCount,
-    textSet,
-    undoStack,
-    redoStack,
+    canUndo,
+    canRedo,
     handleTextChange,
     handleUndo,
     handleRedo,
@@ -39,14 +39,14 @@ export const Home = (): JSX.Element => {
         <TopAds />
 
         <ControlPanel
-          count={textSet.text.length}
+          text={text}
           onUndo={handleUndo}
           onRedo={handleRedo}
           onClear={handleClear}
           onCopy={handleCopy}
           onAdjust={handleAdjust}
-          disableUndo={undoStack.length === 0 || adjustStatus !== 0}
-          disableRedo={redoStack.length === 0 || adjustStatus !== 0}
+          disableUndo={!canUndo || adjustStatus !== 0}
+          disableRedo={!canRedo || adjustStatus !== 0}
           disableClear={adjustStatus !== 0}
           disableCopy={adjustStatus !== 0}
           disableAdjust={adjustStatus !== 0}
@@ -56,7 +56,7 @@ export const Home = (): JSX.Element => {
           <LeftAds />
 
           <TextEditor
-            text={textSet.text}
+            text={text}
             onChange={handleTextChange}
             disabled={adjustStatus !== 0}
             adjustStatus={adjustStatus}
@@ -72,16 +72,16 @@ export const Home = (): JSX.Element => {
       />
 
       <AdjustDrawer
-        text={textSet.text}
-        count={lastCount || textSet.text.trim().length}
+        text={text}
+        lastCount={lastCount}
         open={adjustForms === 2}
         onOpenChange={formsOpenChange}
         onSubmit={onSubmit}
       />
 
       <AdjustDialog
-        text={textSet.text}
-        count={lastCount || textSet.text.trim().length}
+        text={text}
+        lastCount={lastCount}
         open={adjustForms === 3}
         onOpenChange={formsOpenChange}
         onSubmit={onSubmit}

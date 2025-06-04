@@ -12,7 +12,7 @@ import type { AdjustTextInput } from "~/types/adjustTextTypes";
 
 interface AdjustDialogProps {
   text: string;
-  count: number;
+  lastCount: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: SubmitHandler<AdjustTextInput>;
@@ -20,7 +20,7 @@ interface AdjustDialogProps {
 
 export const AdjustDialog = ({
   text,
-  count,
+  lastCount,
   open,
   onOpenChange,
   onSubmit,
@@ -36,7 +36,7 @@ export const AdjustDialog = ({
             調整は失敗する場合があります。
           </DialogDescription>
 
-          <AdjustForm text={text} count={count} onSubmit={onSubmit} />
+          <AdjustForm text={text} lastCount={lastCount} onSubmit={onSubmit} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

@@ -14,7 +14,7 @@ import type { adjustFormSchema } from "@/constants/adjustFormSchema";
 
 interface AdjustDrawerProps {
   text: string;
-  count: number;
+  lastCount: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: SubmitHandler<z.infer<typeof adjustFormSchema>>;
@@ -22,7 +22,7 @@ interface AdjustDrawerProps {
 
 export const AdjustDrawer = ({
   text,
-  count,
+  lastCount,
   open,
   onOpenChange,
   onSubmit,
@@ -39,7 +39,7 @@ export const AdjustDrawer = ({
           </DrawerDescription>
         </DrawerHeader>
 
-        <AdjustForm text={text} count={count} onSubmit={onSubmit} />
+        <AdjustForm text={text} lastCount={lastCount} onSubmit={onSubmit} />
         <DrawerFooter />
       </DrawerContent>
     </Drawer>
