@@ -12,7 +12,7 @@ import type { z } from "zod";
 import { AdjustForm } from "@/components/custom/AdjustForm";
 import type { adjustFormSchema } from "@/constants/adjustFormSchema";
 
-interface AdjustDrawerProps {
+export interface AdjustDrawerProps {
   text: string;
   lastCount: number;
   open: boolean;

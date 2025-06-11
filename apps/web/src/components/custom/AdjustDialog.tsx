@@ -10,7 +10,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { AdjustForm } from "@/components/custom/AdjustForm";
 import type { AdjustTextInput } from "~/types/adjustTextTypes";
 
-interface AdjustDialogProps {
+export interface AdjustDialogProps {
   text: string;
   lastCount: number;
   open: boolean;

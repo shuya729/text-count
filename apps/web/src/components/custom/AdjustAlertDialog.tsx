@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import type { JSX } from "react";
 
-interface AdjustAlertDialogProps {
+export interface AdjustAlertDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }

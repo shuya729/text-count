@@ -16,7 +16,7 @@ import type { JSX } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { z } from "zod";
 
-interface AdjustFormProps {
+export interface AdjustFormProps {
   text: string;
   lastCount: number;
   onSubmit: SubmitHandler<AdjustTextInput>;

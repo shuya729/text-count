@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Copy, Loader2, RotateCcw, Redo, Undo, Edit2 } from "lucide-react";
 import type { JSX } from "react";
 
-interface ControlPanelProps {
+export interface ControlPanelProps {
   text: string;
   onUndo: () => void;
   onRedo: () => void;

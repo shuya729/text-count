@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import type { JSX } from "react";
 
-interface TextEditorProps {
+export interface TextEditorProps {
   text: string;
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   disabled: boolean;

@@ -3,11 +3,6 @@ import { analytics, functions } from "@/firebase";
 import { logEvent } from "firebase/analytics";
 import type { AdjustTextInput, AdjustTextOutput } from "~/types/adjustTextTypes";
 
-/**
- * 文字数を調整する関数
- * @param {AdjustTextInput} input - 入力文字列と目標文字数
- * @returns {Promise<AdjustTextOutput>} - 調整後の文字列と状態
- */
 export async function adjustText(input: AdjustTextInput): Promise<AdjustTextOutput> {
   // anlytics のイベントを記録
   logEvent(analytics, "adjust_text", {
