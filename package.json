@@ -9,7 +9,10 @@
 	"scripts": {
 		"lint": "eslint .",
 		"dev:api": "npm -w api run serve",
-		"dev:web": "npm -w web run dev"
+		"dev:web": "npm -w web run dev",
+		"test:api": "npm -w api run test",
+		"test:web": "npm -w web run test",
+		"test": "npm run test:web && npm run test:api"
 	},
 	"dependencies": {
 		"firebase": "^11.8.1"

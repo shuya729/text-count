@@ -9,10 +9,18 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./../*"]
+    }
   },
   "compileOnSave": true,
   "include": [
-    "src"
-  ]
+    "src",
+    "test",
+    "jest.config.ts"
+  ],
 }
