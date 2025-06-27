@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { adjustText } from "@/service/adjustText";
-import type { AdjustTextInput, AdjustTextOutput } from "~/types/adjustTextTypes";
+import { AdjustState, type AdjustTextInput, type AdjustTextOutput } from "~/types/adjustTextTypes";
 
 interface TextSet { text: string; date: number; }
 
@@ -223,7 +223,7 @@ const useAdjustForms = () => {
     setLastCount(input.count);
     const output: AdjustTextOutput = await adjustText(input);
 
-    if (output.state === 0) {
+    if (output.state === AdjustState.success) {
       updateText("");
       setAdjustStatus(2);
       writeOutput(output.text, Date.now(), updateTextSet);

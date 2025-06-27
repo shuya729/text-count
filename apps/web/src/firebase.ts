@@ -8,7 +8,7 @@ import {
 
 const firebaseConfig = {
   apiKey: "AIzaSyBnFPyovtyH8lkFVgq4xv78ogs4HiCpatY",
-  authDomain: "text-count.firebaseapp.com",
+  authDomain: "ai-chousei.com",
   projectId: "text-count",
   storageBucket: "text-count.firebasestorage.app",
   messagingSenderId: "514525907177",

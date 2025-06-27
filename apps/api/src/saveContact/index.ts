@@ -4,25 +4,16 @@ import { defineSecret } from "firebase-functions/params";
 import { getFirestore, Timestamp } from "firebase-admin/firestore";
 import axios from "axios";
 
+import { ContactInput, ContactOutput, ContactState } from "~/types/contactTypes";
+
 const lineChannelAccessToken = defineSecret("LINE_CHANNEL_ACCESS_TOKEN");
 const db = getFirestore();
-
-interface ContactInput {
-  name: string;
-  mail: string;
-  content: string;
-}
-
-interface ContactOutput {
-  state: number; // 0: 成功, 1: エラー
-  message: string;
-}
 
 interface ContactLog {
   type: "functionLog";
   function: string;
   input: { name: string; mail: string; content: string };
-  output: { state: number; message: string };
+  output: { state: ContactState; message: string };
   position: number;
 }
 
@@ -51,7 +42,7 @@ export const saveContact = onCall(
 
     if (!isContactInput(input)) {
       const ret: ContactOutput = {
-        state: 1,
+        state: ContactState.error,
         message: "不正な入力です。",
       };
       logger.info({
@@ -79,7 +70,7 @@ export const saveContact = onCall(
       });
     } catch (e) {
       const ret: ContactOutput = {
-        state: 1,
+        state: ContactState.error,
         message: "送信に失敗しました。",
       };
       if (e instanceof Error) {
@@ -116,7 +107,7 @@ export const saveContact = onCall(
       });
     } catch (e) {
       const ret: ContactOutput = {
-        state: 1,
+        state: ContactState.error,
         message: "送信に失敗しました。",
       };
       if (e instanceof Error) {
@@ -133,7 +124,7 @@ export const saveContact = onCall(
     }
 
     const ret: ContactOutput = {
-      state: 0,
+      state: ContactState.success,
       message: "送信に成功しました。",
     };
     const log: ContactLog = {

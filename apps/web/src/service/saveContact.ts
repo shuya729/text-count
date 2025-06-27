@@ -1,6 +1,6 @@
 import { httpsCallable } from "firebase/functions";
 import { functions } from "@/firebase";
-import type { ContactInput, ContactOutput } from "~/types/contactTypes";
+import { ContactState, type ContactInput, type ContactOutput } from "~/types/contactTypes";
 
 export async function saveContact(input: ContactInput): Promise<ContactOutput> {
   const saveContact = httpsCallable(functions, "saveContact");
@@ -9,7 +9,7 @@ export async function saveContact(input: ContactInput): Promise<ContactOutput> {
     return res.data as ContactOutput;
   } catch {
     return {
-      state: 1,
+      state: ContactState.error,
       message: "エラーが発生しました。",
     };
   }

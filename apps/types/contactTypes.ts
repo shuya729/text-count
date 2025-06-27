@@ -5,6 +5,12 @@ export interface ContactInput {
 }
 
 export interface ContactOutput {
-  state: number; // 0: 成功, 1: エラー
+  state: ContactState;
   message: string;
 }
+
+export const ContactState = {
+  success: 0,
+  error: 1,
+} as const;
+export type ContactState = (typeof ContactState)[keyof typeof ContactState];

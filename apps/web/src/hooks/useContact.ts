@@ -1,4 +1,4 @@
-import type { ContactInput } from "~/types/contactTypes";
+import { ContactState, type ContactInput } from "~/types/contactTypes";
 import { contactFormSchema } from "@/constants/contactFormSchema";
 import { saveContact } from "@/service/saveContact";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ export const useContact = () => {
   const onSubmit = async (input: ContactInput) => {
     setSending(true);
     const res = await saveContact(input);
-    if (res.state === 0) {
+    if (res.state === ContactState.success) {
       contactForm.reset();
       toast.success("問い合わせ内容を送信しました。");
     } else {

@@ -1,7 +1,7 @@
 import { httpsCallable } from "firebase/functions";
 import { analytics, functions } from "@/firebase";
 import { logEvent } from "firebase/analytics";
-import type { AdjustTextInput, AdjustTextOutput } from "~/types/adjustTextTypes";
+import { AdjustState, type AdjustTextInput, type AdjustTextOutput } from "~/types/adjustTextTypes";
 
 export async function adjustText(input: AdjustTextInput): Promise<AdjustTextOutput> {
   // anlytics のイベントを記録
@@ -17,7 +17,7 @@ export async function adjustText(input: AdjustTextInput): Promise<AdjustTextOutp
   } catch {
     return {
       text: input.text,
-      state: 2,
+      state: AdjustState.error,
       message: "エラーが発生しました。",
     };
   }

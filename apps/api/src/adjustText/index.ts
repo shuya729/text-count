@@ -10,6 +10,8 @@ import {
   SUB_WORDS_PROMPT,
 } from "./prompt";
 
+import { AdjustState } from "~/types/adjustTextTypes";
+
 enableFirebaseTelemetry();
 
 const ai = genkit({
@@ -205,7 +207,7 @@ const adjustTextFlow = ai.defineFlow(
         position = 1;
         ret = adjustOutputSchema.parse({
           text: props.text,
-          state: 2,
+          state: AdjustState.error,
           message: "エラーが発生しました。",
         });
         break;
@@ -215,7 +217,7 @@ const adjustTextFlow = ai.defineFlow(
         position = 2;
         ret = adjustOutputSchema.parse({
           text: text,
-          state: 0,
+          state: AdjustState.success,
           message: "文字数を調整しました。",
         });
         break;
@@ -226,7 +228,7 @@ const adjustTextFlow = ai.defineFlow(
       position = 3;
       ret = adjustOutputSchema.parse({
         text: closestText(texts, props.count),
-        state: 1,
+        state: AdjustState.failed,
         message: "文字数の調整に失敗しました。再度お試しください。",
       });
     }
