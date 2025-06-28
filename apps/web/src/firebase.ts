@@ -6,6 +6,8 @@ import {
   ReCaptchaEnterpriseProvider,
 } from "firebase/app-check";
 
+const isDev = import.meta.env.DEV;
+
 const firebaseConfig = {
   apiKey: "AIzaSyBnFPyovtyH8lkFVgq4xv78ogs4HiCpatY",
   authDomain: "ai-chousei.com",
@@ -15,6 +17,10 @@ const firebaseConfig = {
   appId: "1:514525907177:web:a5943b1177ea6bba8d0878",
   measurementId: "G-B3P1DQ8NZF",
 };
+
+if (isDev) {
+  globalThis.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+}
 
 const app = initializeApp(firebaseConfig);
 initializeAppCheck(app, {
@@ -26,7 +32,6 @@ initializeAppCheck(app, {
 export const analytics = getAnalytics(app);
 export const functions = getFunctions(app, "asia-northeast1");
 
-if (import.meta.env.DEV) {
-  globalThis.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+if (isDev) {
   connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 }
