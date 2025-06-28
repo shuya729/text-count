@@ -1,25 +1,17 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useTextEdit } from '@/hooks/useTextEdit';
-import type { AdjustTextInput } from '~/types/adjustTextTypes';
+import type { AdjustTextInput, AdjustTextOutput } from '~/types/adjustTextTypes';
 
 // モック設定
 vi.mock('@/service/adjustText', () => ({ adjustText: vi.fn() }));
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
-vi.mock('react-router', () => ({
-  useSearchParams: vi.fn(() => [
-    new URLSearchParams(),
-    vi.fn()
-  ])
-}));
 
 import { adjustText } from '@/service/adjustText';
 import { toast } from 'sonner';
-import { useSearchParams } from 'react-router';
 
 const mockAdjustText = vi.mocked(adjustText);
 const mockToast = vi.mocked(toast);
-const mockUseSearchParams = vi.mocked(useSearchParams);
 
 // グローバルAPIのモック
 Object.assign(navigator, { clipboard: { writeText: vi.fn() } });
@@ -51,19 +43,9 @@ Object.defineProperty(globalThis, 'matchMedia', {
 });
 
 describe('useTextEdit', () => {
-  let mockSearchParams: URLSearchParams;
-  let mockSetSearchParams: ReturnType<typeof vi.fn>;
-
   beforeEach(() => {
     vi.clearAllMocks();
     eventListeners = {};
-
-    // URLSearchParamsのモック初期化
-    mockSearchParams = new URLSearchParams();
-    mockSetSearchParams = vi.fn((params) => {
-      mockSearchParams = params;
-    });
-    mockUseSearchParams.mockReturnValue([mockSearchParams, mockSetSearchParams]);
 
     Object.defineProperty(document, 'addEventListener', { value: mockAddEventListener });
     Object.defineProperty(document, 'removeEventListener', { value: mockRemoveEventListener });
@@ -88,15 +70,6 @@ describe('useTextEdit', () => {
       expect(result.current.canRedo).toBe(false);
       expect(mockAddEventListener).toHaveBeenCalledWith('keydown', expect.any(Function));
     });
-
-    it('URLパラメータから初期値を読み込む', () => {
-      mockSearchParams.set('text', '初期テキスト');
-      mockUseSearchParams.mockReturnValue([mockSearchParams, mockSetSearchParams]);
-
-      const { result } = renderHook(() => useTextEdit());
-
-      expect(result.current.text).toBe('初期テキスト');
-    });
   });
 
   describe('状態管理', () => {
@@ -113,9 +86,6 @@ describe('useTextEdit', () => {
       act(() => result.current.handleTextChange(createEvent('テスト2')));
       expect(result.current.text).toBe('テスト2');
       expect(result.current.canUndo).toBe(false);
-
-      // URLパラメータが更新される
-      expect(mockSetSearchParams).toHaveBeenCalled();
 
       // 500ms経過後の変更は履歴に追加される
       act(() => vi.advanceTimersByTime(600));
@@ -157,7 +127,6 @@ describe('useTextEdit', () => {
       // Clear
       act(() => result.current.handleClear());
       expect(result.current.text).toBe('');
-      expect(result.current.canUndo).toBe(false);
 
       // Copy成功
       act(() => result.current.handleTextChange(createEvent('コピーテスト')));
@@ -168,7 +137,7 @@ describe('useTextEdit', () => {
 
       // Copy失敗
       mockClipboard.mockRejectedValue(new Error('コピー失敗'));
-      await act(async () => { await result.current.handleCopy(); });
+      await act(async () => await result.current.handleCopy());
       expect(mockToast.error).toHaveBeenCalledWith('クリップボードへのコピーに失敗しました');
     });
   });
@@ -201,32 +170,32 @@ describe('useTextEdit', () => {
       expect(result.current.adjustForms).toBe(1);
     });
 
-    // it('調整処理の送信が正しく動作する', () => {
-    //   const { result } = renderHook(() => useTextEdit());
-    //   const testInput: AdjustTextInput = { text: 'テスト文字列', count: 100 };
+    it('調整処理の送信が正しく動作する', async () => {
+      const { result } = renderHook(() => useTextEdit());
+      const testInput: AdjustTextInput = { text: 'テスト文字列', count: 100 };
 
-    //   // 成功ケース
-    //   const successOutput: AdjustTextOutput = { state: 0, text: '調整済み', message: '成功' };
-    //   mockAdjustText.mockResolvedValue(successOutput);
+      // 成功ケース
+      const successOutput: AdjustTextOutput = { state: 0, text: '調整済み', message: '成功' };
+      mockAdjustText.mockResolvedValue(successOutput);
 
-    //   act(() => { result.current.onSubmit(testInput) });
-    //   expect(result.current.adjustStatus).toBe(2);
-    //   expect(result.current.lastCount).toBe(100);
+      await act(async () => { result.current.onSubmit(testInput); });
+      expect(result.current.adjustStatus).toBe(2);
+      expect(result.current.lastCount).toBe(100);
 
-    //   act(() => vi.runAllTimers());
-    //   expect(result.current.text).toBe('調整済み');
-    //   expect(result.current.adjustStatus).toBe(0);
+      act(() => vi.runAllTimers());
+      expect(result.current.text).toBe('調整済み');
+      expect(result.current.adjustStatus).toBe(0);
 
-    //   // 失敗ケース
-    //   const errorOutput: AdjustTextOutput = { state: 1, text: 'エラー', message: 'エラー発生' };
-    //   mockAdjustText.mockResolvedValue(errorOutput);
+      // 失敗ケース
+      const errorOutput: AdjustTextOutput = { state: 1, text: 'エラー', message: 'エラー発生' };
+      mockAdjustText.mockResolvedValue(errorOutput);
 
-    //   act(() => { result.current.onSubmit(testInput); });
-    //   expect(result.current.text).toBe('エラー');
-    //   expect(mockToast.error).toHaveBeenCalledWith('エラー発生');
-    // });
+      await act(async () => { await result.current.onSubmit(testInput); });
+      expect(result.current.text).toBe('エラー');
+      expect(mockToast.error).toHaveBeenCalledWith('エラー発生');
+    });
 
-    it('キーボードショートカットが正しく動作する', () => {
+    it('キーボードショートカットが正しく動作する', async () => {
       const { result } = renderHook(() => useTextEdit());
       const createEvent = (value: string) => ({ target: { value } } as React.ChangeEvent<HTMLTextAreaElement>);
 
@@ -255,7 +224,7 @@ describe('useTextEdit', () => {
       act(() => result.current.formsOpenChange(false));
       const testInput: AdjustTextInput = { text: 'test', count: 100 };
       mockAdjustText.mockResolvedValue({ state: 0, text: 'processing', message: 'ok' });
-      act(() => { result.current.onSubmit(testInput); });
+      await act(async () => { result.current.onSubmit(testInput); });
 
       act(() => eventListeners.keydown[0](adjustEvent));
       expect(result.current.adjustForms).toBe(0);
