@@ -23,6 +23,7 @@ export const Contact = (): JSX.Element => {
         name="description"
         content="AI文字数調整くんへのお問い合わせページです。"
       />
+      <link rel="canonical" href="https://ai-chousei.com/contact" />
 
       <div className="w-full p-4 mx-auto max-w-xl">
         <h2 className="text-center text-lg font-medium sm:py-4">

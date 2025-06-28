@@ -10,6 +10,7 @@ export const Notfound = (): JSX.Element => {
         name="description"
         content="AI文字数調整くんのページが見つかりませんでした。"
       />
+      <meta name="robots" content="noindex" />
 
       <div className="w-full py-4 px-6 mx-auto max-w-4xl sm:px-18">
         <h2 className="text-center text-4xl font-semibold pt-8 sm:pt-16">

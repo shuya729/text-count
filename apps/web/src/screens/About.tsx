@@ -10,6 +10,7 @@ export const About = (): JSX.Element => {
         name="description"
         content="AI文字数調整くんについての説明ページです。AI文字数調整くんは、文章の文字数をAIで自然に調整できるツールです。現在200〜2000文字の範囲で調整可能です。"
       />
+      <link rel="canonical" href="https://ai-chousei.com/about" />
 
       <div className="w-full py-4 px-6 mx-auto max-w-4xl sm:px-18">
         <h2 className="text-center text-lg font-medium sm:py-4">

@@ -12,6 +12,7 @@ export const Privacy = (): JSX.Element => {
         name="description"
         content="AI文字数調整くんのプライバシーポリシーページです。"
       />
+      <link rel="canonical" href="https://ai-chousei.com/privacy" />
 
       <div className="w-full py-4 px-6 mx-auto max-w-4xl sm:px-18">
         <h2 className="text-center text-lg font-medium sm:py-4">

@@ -10,6 +10,7 @@ export const Term = (): JSX.Element => {
         name="description"
         content="AI文字数調整くんの利用規約ページです。"
       />
+      <link rel="canonical" href="https://ai-chousei.com/term" />
 
       <div className="w-full py-4 px-6 mx-auto max-w-4xl sm:px-18">
         <h2 className="text-center text-lg font-medium sm:py-4">利用規約</h2>

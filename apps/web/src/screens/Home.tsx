@@ -34,6 +34,7 @@ export const Home = (): JSX.Element => {
         name="description"
         content="AI文字数調整くんは、文章の文字数をAIで自然に調整できるツールです。レポート、ES、SNS投稿など文字数制限がある場面で便利です。現在200〜2000文字の範囲で調整可能です。"
       />
+      <link rel="canonical" href="https://ai-chousei.com/" />
 
       <div className="flex flex-col px-6 pb-2 sm:pb-4 gap-2 sm:gap-4">
         <TopAds />
