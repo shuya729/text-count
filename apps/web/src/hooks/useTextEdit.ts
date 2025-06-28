@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { adjustText } from "@/service/adjustText";
 import { AdjustState, type AdjustTextInput, type AdjustTextOutput } from "~/types/adjustTextTypes";
@@ -6,9 +7,10 @@ import { AdjustState, type AdjustTextInput, type AdjustTextOutput } from "~/type
 interface TextSet { text: string; date: number; }
 
 export const useTextEdit = () => {
-  const [textSet, setTextSet] = useState<TextSet>({ text: "", date: Date.now() });
+  const { getInitialText, updateUrlParam } = useTextParam();
+  const [textSet, setTextSet] = useState<TextSet>({ text: getInitialText(), date: Date.now() });
 
-  const { undo, redo, canUndo, canRedo, addUndo, clearRedo } = useTextHistory();
+  const { undo, redo, canUndo, canRedo, clearUndo, addUndo, clearRedo } = useTextHistory();
   const {
     lastCount,
     adjustForms,
@@ -22,8 +24,9 @@ export const useTextEdit = () => {
     const inputSet = { text: text, date: Date.now() };
     const lastSet = textSet;
     setTextSet(inputSet);
+    updateUrlParam(text);
     return { inputSet, lastSet };
-  }, [textSet]);
+  }, [textSet, updateUrlParam]);
 
   const updateText = useCallback((text: string): void => {
     const { inputSet, lastSet } = updateTextSet(text);
@@ -54,7 +57,8 @@ export const useTextEdit = () => {
 
   const handleClear = useCallback((): void => {
     updateText("");
-  }, [updateText]);
+    clearUndo();
+  }, [updateText, clearUndo]);
 
   const handleCopy = useCallback(async (): Promise<void> => {
     const text = textSet.text;
@@ -118,12 +122,35 @@ export const useTextEdit = () => {
   };
 };
 
+const useTextParam = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const getInitialText = useCallback((): string => {
+    return searchParams.get("text") || "";
+  }, [searchParams]);
+
+  const updateUrlParam = useCallback((text: string): void => {
+    if (text) {
+      searchParams.set("text", text);
+    } else {
+      searchParams.delete("text");
+    }
+    setSearchParams(searchParams, { replace: true });
+  }, [searchParams, setSearchParams]);
+
+  return { getInitialText, updateUrlParam };
+};
+
 const useTextHistory = () => {
   const [undoStack, setUndoStack] = useState<string[]>([]);
   const [redoStack, setRedoStack] = useState<string[]>([]);
 
   const canUndo = undoStack.length > 0;
   const canRedo = redoStack.length > 0;
+
+  const clearUndo = useCallback((): void => {
+    setUndoStack((prev) => prev.length > 0 ? [] : prev);
+  }, []);
 
   const addUndo = useCallback((text: string): void => {
     setUndoStack((prev) => [...prev, text]);
@@ -168,6 +195,7 @@ const useTextHistory = () => {
     redo,
     canUndo,
     canRedo,
+    clearUndo,
     addUndo,
     clearRedo,
     addRedo,
