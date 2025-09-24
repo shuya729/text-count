@@ -10,7 +10,7 @@ import {
   SUB_WORDS_PROMPT,
 } from "./prompt";
 
-import { AdjustState } from "~/types/adjustTextTypes";
+import { AdjustState, AdjustTextInput, AdjustTextOutput } from "~/types/adjustTextTypes";
 
 enableFirebaseTelemetry();
 
@@ -21,39 +21,17 @@ const ai = genkit({
 
 const adjustInputSchema = z
   .object({
-    // text: z
-    //   .string()
-    //   .trim()
-    //   .min(100, "入力文字数は100文字以上で入力してください。")
-    //   .max(2000, "入力文字数は2000文字以下で入力してください。"),
-    text: z.string().optional(), // 後で削除する
-    input: z.string().optional(), // 後で削除する
+    text: z
+      .string()
+      .trim()
+      .min(100, "入力文字数は100文字以上で入力してください。")
+      .max(2000, "入力文字数は2000文字以下で入力してください。"),
     count: z
       .number()
       .int("目標文字数は整数で入力して下さい。")
       .min(200, "目標文字数は200以上で入力して下さい。")
       .max(2000, "目標文字数は2000以下で入力して下さい。"),
-  })
-  // 以下、後で削除する 
-  .transform((data) => {
-    const text = data.text || data.input || "";
-    return {
-      input: data.input || "",
-      text: text.trim(),
-      count: data.count,
-    };
-  })
-  .refine(
-    ({ text }) => {
-      return text.length >= 100 && text.length <= 2000;
-    },
-    {
-      message: "入力文字数は100文字以上2000文字以下で入力してください。",
-      path: ["text"],
-    }
-  )
-  // 
-  .refine(
+  }).refine(
     ({ text, count }) => {
       return !judge(text, count);
     },
@@ -64,18 +42,16 @@ const adjustInputSchema = z
   );
 
 const adjustOutputSchema = z.object({
-  // text: z.string().trim(),
+  text: z.string().trim(),
   state: z.number().int(), // 0: 成功, 1: 失敗, 2: エラー
   message: z.string(),
-  text: z.string().optional(), // 後で削除する
-  output: z.string().optional(), // 後で削除する
 });
 
 interface AdjustLog {
   type: "functionLog";
   function: string;
-  input: object;
-  output: object;
+  input: AdjustTextInput;
+  output: AdjustTextOutput;
   times: number;
   position: number;
 }
@@ -171,24 +147,18 @@ const adjustTextFlow = ai.defineFlow(
     inputSchema: adjustInputSchema,
     outputSchema: adjustOutputSchema,
   },
-  async (args) => {
-    // 後で削除する
-    const props = {
-      text: args.text || args.input || "",
-      count: args.count,
-    };
-    // 
+  async ({ text, count }) => {
     const functionName = "adjustText";
     let ret = null;
     let position = 0;
-    let text = props.text.replace(/\*\*/g, "").trim();
+    text = text.replace(/\*\*/g, "").trim();
     const texts: string[] = [text];
 
     let i = 0;
     for (i = 0; i < 5; i++) {
       try {
         const res = await ai.generate({
-          system: system(text, props.count),
+          system: system(text, count),
           prompt: `# 入力\n \`\`\`\n${text}\n \`\`\`\n`,
           config: {
             maxOutputTokens: 8000,
@@ -206,14 +176,14 @@ const adjustTextFlow = ai.defineFlow(
         }
         position = 1;
         ret = adjustOutputSchema.parse({
-          text: props.text,
+          text: text,
           state: AdjustState.error,
           message: "エラーが発生しました。",
         });
         break;
       }
 
-      if (judge(text, props.count)) {
+      if (judge(text, count)) {
         position = 2;
         ret = adjustOutputSchema.parse({
           text: text,
@@ -227,20 +197,17 @@ const adjustTextFlow = ai.defineFlow(
     if (ret === null) {
       position = 3;
       ret = adjustOutputSchema.parse({
-        text: closestText(texts, props.count),
+        text: closestText(texts, count),
         state: AdjustState.failed,
         message: "文字数の調整に失敗しました。再度お試しください。",
       });
     }
 
-    // 以下、後で削除する
-    ret.output = ret.text;
-
     const log: AdjustLog = {
       type: "functionLog",
       function: functionName,
-      input: props,
-      output: ret,
+      input: { text, count },
+      output: ret as AdjustTextOutput,
       times: i,
       position: position,
     };
