@@ -9,6 +9,28 @@ import { ContactInput, ContactOutput, ContactState } from "~/types/contactTypes"
 const lineChannelAccessToken = defineSecret("LINE_CHANNEL_ACCESS_TOKEN");
 const db = getFirestore();
 
+const getRequiredEnv = (key: "LINE_PUSH_USER_ID"): string => {
+  const value = process.env[key];
+
+  if (!value) {
+    throw new Error(`環境変数 ${key} が設定されていません。apps/api/.env を確認してください。`);
+  }
+
+  return value;
+};
+
+const getLineChannelAccessToken = (): string => {
+  const value = process.env.LINE_CHANNEL_ACCESS_TOKEN ?? lineChannelAccessToken.value();
+
+  if (!value) {
+    throw new Error(
+      "LINE_CHANNEL_ACCESS_TOKEN が設定されていません。apps/api/.env または Firebase Secret を確認してください。"
+    );
+  }
+
+  return value;
+};
+
 interface ContactLog {
   type: "functionLog";
   function: string;
@@ -87,7 +109,7 @@ export const saveContact = onCall(
     }
 
     try {
-      const userId = "U4a98564f54715db1129d0db57e423878";
+      const userId = getRequiredEnv("LINE_PUSH_USER_ID");
       const post = {
         "to": userId,
         "messages": [
@@ -102,7 +124,7 @@ export const saveContact = onCall(
       await axios.post(lineUrl, post, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${lineChannelAccessToken.value()}`,
+          "Authorization": `Bearer ${getLineChannelAccessToken()}`,
         },
       });
     } catch (e) {
